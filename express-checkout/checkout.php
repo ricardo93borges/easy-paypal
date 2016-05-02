@@ -44,21 +44,8 @@ if (isset($_GET['token'])) {
         //if ($response['TOKEN'] == $token && $responseNvp['ACK'] == 'Success') {
         if ($response['ACK'] == 'Success') {
             $params['PAYERID'] = $response['PAYERID'];
-            //$params['PAYMENTREQUEST_0_AMT'] = $response['PAYMENTREQUEST_0_AMT'];
-            //$params['PAYMENTREQUEST_0_CURRENCYCODE'] = $response['PAYMENTREQUEST_0_CURRENCYCODE'];
-            //$params['SUBJECT'] = $response['SUBJECT'];
             $params['METHOD'] = 'DoExpressCheckoutPayment';
-            //$params['PAYMENTREQUEST_0_PAYMENTACTION'] = 'SALE';
-            //curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($nvp));
 
-            /*$response = urldecode(curl_exec($curl));
-            $responseNvp = array();
-
-            if (preg_match_all('/(?<name>[^\=]+)\=(?<value>[^&]+)&?/', $response, $matches)) {
-                foreach ($matches['name'] as $offset => $name) {
-                    $responseNvp[$name] = $matches['value'][$offset];
-                }
-            }*/
             $response = $nvp->send($params);
             if ($response['PAYMENTINFO_0_PAYMENTSTATUS'] == 'Completed') {
                 echo 'Parabéns, sua compra foi concluída com sucesso';
@@ -77,10 +64,6 @@ if (isset($_GET['token'])) {
 }else {
     echo "<br>SetExpressCheckout<br>";
     $response = $nvp->send($params);
-
-    //echo "<br> Response: <br>";
-    //var_dump($response);
-    //die();
 
     if (isset($response['ACK']) && $response['ACK'] == 'Success') {
         $paypalURL = 'https://www.sandbox.paypal.com/br/cgi-bin/webscr';

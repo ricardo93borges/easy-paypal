@@ -54,7 +54,7 @@ $requestNvp = array(
     'L_PAYMENTREQUEST_0_NAME1' => 'Item B',
     'L_PAYMENTREQUEST_0_DESC1' => 'Produto B – 220V',
     'L_PAYMENTREQUEST_0_AMT1' => '11.00',
-    'L_PAYMENTREQUEST_0_QTY1' => '1',
+        'L_PAYMENTREQUEST_0_QTY1' => '1',
  
     'RETURNURL' => 'http://PayPalPartner.com.br/VendeFrete?return=1',
     'CANCELURL' => 'http://PayPalPartner.com.br/CancelaFrete',

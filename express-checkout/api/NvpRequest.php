@@ -6,6 +6,12 @@ class NvpRequest{
     private $password;
     private $signature;
     private $request;
+    private $localecode;
+    private $version;
+    private $method;
+    private $returnUrl;
+    private $cancelUrl;
+    private $buttonSource;
 
     /**
      * NvpRequest constructor.
@@ -31,6 +37,18 @@ class NvpRequest{
     function __set($name, $value)
     {
         $this->$name = $value;
+    }
+
+    function setExpressCheckout(){
+
+    }
+
+    function getExpressCheckoutDetails(){
+
+    }
+
+    function doExpressCheckoutPayment(){
+
     }
     /*
         array(
