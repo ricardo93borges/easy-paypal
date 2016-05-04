@@ -6,7 +6,7 @@ $total = '0.5'; //Total do carrinho do cliente
 $appUrl = "http://127.0.0.1/paypal/express-checkout/";
 
 
-$nvp = new NvpRequest($creed['username'], $creed['password'], $creed['signature'], true);
+    $nvp = new NvpRequest($creed['username'], $creed['password'], $creed['signature'], true);
 
 $params = array(
         'LOCALECODE' => 'pt_BR',
