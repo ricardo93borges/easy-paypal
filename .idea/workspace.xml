@@ -2,40 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61f7b439-02a1-43d6-bacb-464003d8188a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/api/Item.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/api/Seller.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/api/autoload.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/api/test.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/checkout.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/checkout_step_by_step.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/express-checkout/api/Item.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/express-checkout/api/NvpRequest.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/express-checkout/api/Seller.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/AAEmbedded/simpleEmbeddedFlow.html" afterPath="$PROJECT_DIR$/express_checkout/Codes/AAEmbedded/simpleEmbeddedFlow.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/AAEmbedded/success.html" afterPath="$PROJECT_DIR$/express_checkout/Codes/AAEmbedded/success.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/ReferenceTransaction/checkout.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/ReferenceTransaction/checkout.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/ReferenceTransaction/exemplo.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/ReferenceTransactionSandbox/exemplo.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/ReferenceTransaction/return.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/ReferenceTransaction/return.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/ReferenceTransactionSandbox/checkout.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/ReferenceTransactionSandbox/checkout.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/ReferenceTransactionSandbox/exemplo.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/ReferenceTransaction/exemplo.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/ReferenceTransactionSandbox/return.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/ReferenceTransactionSandbox/return.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/Transaction/test.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/Transaction/test.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/Transaction/transaction.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/Transaction/transaction.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/Codes/TransactionSearch/checkout.php" afterPath="$PROJECT_DIR$/express_checkout/Codes/TransactionSearch/checkout.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/README.md" afterPath="$PROJECT_DIR$/express_checkout/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/checkout.php" afterPath="$PROJECT_DIR$/express_checkout/checkout_bkp_2.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/checkout_bkp.php" afterPath="$PROJECT_DIR$/express_checkout/checkout_bkp.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/creed.php" afterPath="$PROJECT_DIR$/express_checkout/creed.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/customizeHdrimgExpressCheckout.php" afterPath="$PROJECT_DIR$/express_checkout/customizeHdrimgExpressCheckout.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/index.php" afterPath="$PROJECT_DIR$/express_checkout/index.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/nbproject/project.properties" afterPath="$PROJECT_DIR$/express_checkout/nbproject/project.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/nbproject/project.xml" afterPath="$PROJECT_DIR$/express_checkout/nbproject/project.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/retorno.php" afterPath="$PROJECT_DIR$/express_checkout/retorno.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/retorno_bkp.php" afterPath="$PROJECT_DIR$/express_checkout/retorno_bkp.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/sendNvpRequest.php" afterPath="$PROJECT_DIR$/express_checkout/sendNvpRequest.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/express-checkout/setExpressCheckout.php" afterPath="$PROJECT_DIR$/express_checkout/setExpressCheckout.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/api/Item.php" afterPath="$PROJECT_DIR$/express_checkout/api/Item.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" afterPath="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/api/Seller.php" afterPath="$PROJECT_DIR$/express_checkout/api/Seller.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/checkout.php" afterPath="$PROJECT_DIR$/express_checkout/checkout.php" />
     </list>
     <ignored path="paypal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,42 +27,12 @@
     <favorites_list name="paypal" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Item.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/express_checkout/api/Item.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.6666667">
-              <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Seller.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/express_checkout/api/Seller.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.666667">
-              <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="autoload.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/express_checkout/api/autoload.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.0">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/express_checkout/api/test.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3333335">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="16" selection-end-column="25" />
+            <state vertical-scroll-proportion="-2.6666667">
+              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -100,8 +41,18 @@
       <file leaf-file-name="NvpRequest.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/express_checkout/api/NvpRequest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8724911">
-              <caret line="341" column="4" selection-start-line="341" selection-start-column="4" selection-end-line="341" selection-end-column="4" />
+            <state vertical-scroll-proportion="-0.38162544">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Seller.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/express_checkout/api/Seller.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.6666667">
+              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -110,28 +61,8 @@
       <file leaf-file-name="checkout_step_by_step.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/express_checkout/checkout_step_by_step.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.666667">
-              <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/express_checkout/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3333335">
-              <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="creed.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/express_checkout/creed.php">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.6666667">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="5" selection-end-column="2" />
+              <caret line="15" column="85" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -140,18 +71,8 @@
       <file leaf-file-name="checkout.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/express_checkout/checkout.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.666666">
-              <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checkout_bkp.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/express_checkout/checkout_bkp.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.5555553">
-              <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+            <state vertical-scroll-proportion="-17.333334">
+              <caret line="26" column="213" selection-start-line="26" selection-start-column="213" selection-end-line="26" selection-end-column="213" />
               <folding />
             </state>
           </provider>
@@ -178,12 +99,12 @@
         <option value="$PROJECT_DIR$/express-checkout/api/NvpRequest.php" />
         <option value="$PROJECT_DIR$/express-checkout/api/autoload.php" />
         <option value="$PROJECT_DIR$/express-checkout/checkout.php" />
-        <option value="$PROJECT_DIR$/express_checkout/api/Item.php" />
-        <option value="$PROJECT_DIR$/express_checkout/api/Seller.php" />
         <option value="$PROJECT_DIR$/express_checkout/api/autoload.php" />
-        <option value="$PROJECT_DIR$/express_checkout/checkout.php" />
         <option value="$PROJECT_DIR$/express_checkout/index.php" />
         <option value="$PROJECT_DIR$/express_checkout/checkout_step_by_step.php" />
+        <option value="$PROJECT_DIR$/express_checkout/api/Seller.php" />
+        <option value="$PROJECT_DIR$/express_checkout/api/Item.php" />
+        <option value="$PROJECT_DIR$/express_checkout/checkout.php" />
         <option value="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" />
       </list>
     </option>
@@ -227,7 +148,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -270,6 +190,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -337,7 +258,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2630458" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19275825" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -372,6 +293,158 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_bkp.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/Item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/Seller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/autoload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="16" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/NvpRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_step_by_step.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/creed.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="5" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_bkp.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/Item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/Seller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/autoload.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="16" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/NvpRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_step_by_step.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/creed.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="5" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -521,31 +594,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/api/test.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3333335">
+        <state vertical-scroll-proportion="0.0">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="16" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/express_checkout/api/Item.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6666667">
-          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/express_checkout/api/Seller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.666667">
-          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/creed.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6666667">
+        <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="5" selection-end-column="2" />
           <folding />
         </state>
@@ -555,54 +612,69 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.576">
           <caret line="46" column="59" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/api/autoload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.0">
+        <state vertical-scroll-proportion="0.0">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_bkp.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.5555553">
-          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3333335">
+        <state vertical-scroll-proportion="0.0">
           <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/express_checkout/checkout.php">
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_bkp.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.666666">
-          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.45153934">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/checkout_step_by_step.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.666667">
-          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+        <state vertical-scroll-proportion="-0.6666667">
+          <caret line="15" column="85" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/Seller.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6666667">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/Item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6666667">
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/checkout.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.333334">
+          <caret line="26" column="213" selection-start-line="26" selection-start-column="213" selection-end-line="26" selection-end-column="213" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/api/NvpRequest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8724911">
-          <caret line="341" column="4" selection-start-line="341" selection-start-column="4" selection-end-line="341" selection-end-column="4" />
+        <state vertical-scroll-proportion="-0.38162544">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

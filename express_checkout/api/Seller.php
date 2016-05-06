@@ -3,12 +3,6 @@ namespace paypal\express_checkout\api;
 
 class Seller
 {
-    /*
-        'PAYMENTREQUEST_0_PAYMENTACTION'	=> 'Sale',
-        'PAYMENTREQUEST_0_AMT'              => '40.00',
-        'PAYMENTREQUEST_0_CURRENCYCODE'     => 'BRL',
-        'PAYMENTREQUEST_0_ITEMAMT'          => '40.00',
-     */
     private $paymentAction;
     private $amount;
     private $currencyCode;
@@ -19,13 +13,18 @@ class Seller
     /**
      * Seller constructor.
      * @param $paymentAction
-     * @param $currencyCode
+     * @param null $reference
+     * @param string $currencyCode
      */
-    public function __construct($paymentAction, $reference, $currencyCode='BRL'){
+    public function __construct($paymentAction, $reference=null, $currencyCode='BRL'){
         $this->paymentAction = $paymentAction;
         $this->reference = $reference;
         $this->currencyCode = $currencyCode;
         $this->items = array();
+
+        if(is_null($reference)){
+            $this->reference = md5(uniqid(rand(), true));
+        }
     }
 
     /**

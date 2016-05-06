@@ -3,13 +3,6 @@ namespace paypal\express_checkout\api;
 
 class Item
 {
-    /*
-        'L_PAYMENTREQUEST_0_NAME0'          => 'Teste Daslu',
-        'L_PAYMENTREQUEST_0_DESC0'          => 'Teste Daslu',
-        'L_PAYMENTREQUEST_0_AMT0'          => '50.00',
-        'L_PAYMENTREQUEST_0_QTY1' => '1',
-        'L_PAYMENTREQUEST_0_ITEMAMT' => '11.00',
-     */
     private $name;
     private $description;
     private $amount;

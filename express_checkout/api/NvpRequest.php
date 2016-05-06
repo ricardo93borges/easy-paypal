@@ -19,7 +19,7 @@ class NvpRequest{
     private $payerId;
     private $paypalSandboxUrl;
     private $paypalUrl;
-    private $reference;
+    private $headerImage;
 
     /**
      * NvpRequest constructor.
@@ -34,7 +34,7 @@ class NvpRequest{
      * @param $cancelUrl
      * @param $buttonSource
      */
-    public function __construct($user, $password, $signature, $sandbox, $method='setExpressCheckout', $returnUrl='', $cancelUrl='', $reference=null, $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0'){
+    public function __construct($user, $password, $signature, $sandbox, $method='setExpressCheckout', $returnUrl, $cancelUrl, $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0'){
         $this->sandbox = $sandbox;
         $this->user = $user;
         $this->password = $password;
@@ -45,28 +45,9 @@ class NvpRequest{
         $this->returnUrl = $returnUrl;
         $this->cancelUrl = $cancelUrl;
         $this->buttonSource = $buttonSource;
+        $this->headerImage = $headerImage;
         $this->paypalSandboxUrl = 'https://www.sandbox.paypal.com/br/cgi-bin/webscr';
         $this->paypalUrl = 'https://www.paypal.com/br/cgi-bin/webscr';
-
-        if(is_null($reference)){
-            $this->reference = md5(uniqid(rand(), true));
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getReference()
-    {
-        return $this->reference;
-    }
-
-    /**
-     * @param string $reference
-     */
-    public function setReference($reference)
-    {
-        $this->reference = $reference;
     }
 
     /**
@@ -293,6 +274,22 @@ class NvpRequest{
         $this->paypalUrl = $paypalUrl;
     }
 
+    /**
+     * @return string
+     */
+    public function getHeaderImage()
+    {
+        return $this->headerImage;
+    }
+
+    /**
+     * @param string $headerImage
+     */
+    public function setHeaderImage($headerImage)
+    {
+        $this->headerImage = $headerImage;
+    }
+
     function setExpressCheckout(){
         $this->request['METHOD'] = 'setExpressCheckout';
         $response = $this->exec();
@@ -325,6 +322,8 @@ class NvpRequest{
                 //3-doExpressCheckoutPayment
                 $response = $this->doExpressCheckoutPayment();
                 return $response;
+            } else{
+                return array('error'=>$response);
             }
         }else {
             //1-setExpressCheckout
@@ -334,12 +333,12 @@ class NvpRequest{
                 $this->setToken($response['TOKEN']);
                 $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
                 header('Location: ' . $url . '?' . http_build_query($query));
-            } else {
-                die('ACK not set');
+            } else{
+                return array('error'=>$response);
             }
         }
     }
-    
+
     function getRequest(){
         return $this->request;
     }
@@ -352,6 +351,7 @@ class NvpRequest{
         }
 
         $this->request = array(
+            'HDRIMG' =>$this->getHeaderImage(),
             'LOCALECODE' => $this->getLocalecode(),
             'USER' => $this->getUser(),
             'PWD' => $this->getPassword(),
@@ -370,7 +370,7 @@ class NvpRequest{
             $this->request['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
             $this->request['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
             $this->request['PAYMENTREQUEST_'.$countSeller.'_ITEMAMT'] = $seller->getItemAmount();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $this->getReference();
+            $this->request['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
 
             foreach($seller->getItems() as $item){
                 $this->request['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
