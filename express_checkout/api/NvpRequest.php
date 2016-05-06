@@ -332,7 +332,10 @@ class NvpRequest{
                 $url =  $this->isSandbox() ? $this->getPaypalSandboxUrl() : $this->getPaypalUrl();
                 $this->setToken($response['TOKEN']);
                 $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
-                header('Location: ' . $url . '?' . http_build_query($query));
+                //header('Location: ' . $url . '?' . http_build_query($query));
+                $redirectURL = sprintf('%s?%s', $url, http_build_query($query));
+                //carrega a página de redirecionamento
+	            require 'redirect.php';
             } else{
                 return array('error'=>$response);
             }

@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61f7b439-02a1-43d6-bacb-464003d8188a" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/express_checkout/api/redirect.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/api/Item.php" afterPath="$PROJECT_DIR$/express_checkout/api/Item.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" afterPath="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/api/Seller.php" afterPath="$PROJECT_DIR$/express_checkout/api/Seller.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/express_checkout/checkout.php" afterPath="$PROJECT_DIR$/express_checkout/checkout.php" />
     </list>
     <ignored path="paypal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,9 +39,25 @@
       <file leaf-file-name="NvpRequest.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/express_checkout/api/NvpRequest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.38162544">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.69964665">
+              <caret line="336" column="54" selection-start-line="336" selection-start-column="54" selection-end-line="336" selection-end-column="54" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="redirect.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/express_checkout/api/redirect.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.9818182">
+              <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
+              <folding>
+                <marker date="1462564349045" expanded="true" signature="377:626" placeholder="..." />
+                <marker date="1462564349045" expanded="true" signature="640:1465" placeholder="..." />
+                <marker date="1462564349045" expanded="true" signature="1479:1511" placeholder="..." />
+                <marker date="1462564349045" expanded="true" signature="1642:1689" placeholder="..." />
+                <marker date="1462564349045" expanded="true" signature="1806:1825" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,6 +120,7 @@
         <option value="$PROJECT_DIR$/express_checkout/api/Item.php" />
         <option value="$PROJECT_DIR$/express_checkout/checkout.php" />
         <option value="$PROJECT_DIR$/express_checkout/api/NvpRequest.php" />
+        <option value="$PROJECT_DIR$/express_checkout/api/redirect.php" />
       </list>
     </option>
   </component>
@@ -293,14 +308,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/express_checkout/checkout_bkp.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/api/Item.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -671,10 +678,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/express_checkout/api/redirect.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.9818182">
+          <caret line="3" column="53" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
+          <folding>
+            <marker date="1462564349045" expanded="true" signature="377:626" placeholder="..." />
+            <marker date="1462564349045" expanded="true" signature="640:1465" placeholder="..." />
+            <marker date="1462564349045" expanded="true" signature="1479:1511" placeholder="..." />
+            <marker date="1462564349045" expanded="true" signature="1642:1689" placeholder="..." />
+            <marker date="1462564349045" expanded="true" signature="1806:1825" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/express_checkout/api/NvpRequest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.38162544">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.69964665">
+          <caret line="336" column="54" selection-start-line="336" selection-start-column="54" selection-end-line="336" selection-end-column="54" />
           <folding />
         </state>
       </provider>
