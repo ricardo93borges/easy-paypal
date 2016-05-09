@@ -1,0 +1,13 @@
+{
+    "name": "ricardo93borges/easy-paypal",
+    "description": "A php library to facilitate the use of paypal",
+    "authors": [
+        {
+            "name": "Ricardo Borges",
+            "email": "ricardo93borges@gmail.com"
+        }
+    ],
+    "require": {
+	"php":">=5.3.0"
+    }
+}
