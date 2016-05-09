@@ -1,5 +1,5 @@
 <?php
-namespace paypal\express_checkout\api;
+namespace easyPaypal;
 
 class Item
 {

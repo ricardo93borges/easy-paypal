@@ -1,6 +1,7 @@
 <?php
-namespace paypal\express_checkout;
-require_once('api/autoload.php');
+
+//require_once('api/autoload.php');
+include "creed.php";
 /*
  * Referencia / Invoice ID: Campo importante para o acompanhamento e controle interno do comerciante
  * Este campo na requisição aparece como INVNUM
@@ -14,22 +15,16 @@ require_once('api/autoload.php');
  */
 $ref=null;
 
-//Credentials
-$creed = array(
-    'username' => '',
-    'password' => '',
-    'signature' => ''
-);
 //App url
 $appUrl = "http://localhost/paypal/express_checkout/";
 
 //Create NvpRequest
-$nvp = new api\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $appUrl.'checkout.php', $appUrl.'checkout.php', 'http://painel.iprevenda.com/imagens/logo-default.png');
+$nvp = new easyPaypal\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $appUrl.'checkout.php', $appUrl.'checkout.php', 'http://painel.iprevenda.com/imagens/logo-default.png');
 //Create sellers
-$seller = new api\Seller('SALE', $ref);
+$seller = new Seller('SALE', $ref);
 //Add itens to sellers
-$item1 = new api\Item('Texugo', 'um texugo', 40.00, 1);
-$item2 = new api\Item('Texugo 2', 'outro texugo', 40.00, 1);
+$item1 = new Item('Texugo', 'um texugo', 40.00, 1);
+$item2 = new Item('Texugo 2', 'outro texugo', 40.00, 1);
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request

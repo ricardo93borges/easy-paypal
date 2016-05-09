@@ -1,3 +1,4 @@
-# easy-paypal
+Code sample
+===========
 
-A php library to facilitate the use of paypal.
+[Guia de integração com Express Checkout](https://www.paypal-brasil.com.br/x/tutoriais/guia-rapido-de-integracao-com-express-checkout/)
