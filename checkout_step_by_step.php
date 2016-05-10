@@ -1,24 +1,21 @@
 <?php
-namespace paypal\express_checkout;
-require_once('api/autoload.php');
+include 'vendor/autoload.php';
+include "creed.php";
 
-//Credentials
-$creed = array(
-    'username' => '',
-    'password' => '',
-    'signature' => ''
-);
+
 //App url
-$appUrl = "http://localhost/paypal/express_checkout/";
+$appUrl = "http://localhost/easy-paypal/";
+$returnUrl = $appUrl."checkout_step_by_step.php";
+$cancelUrl = $appUrl."checkout_step_by_step.php";
+$logoUrl = '';
 
 //Create NvpRequest
-
-$nvp = new api\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'setExpressCheckout', $appUrl.'checkout_step_by_step.php', $appUrl.'checkout_step_by_step.php');
+$nvp = new \easyPaypal\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
 //Create sellers
-$seller = new api\Seller('SALE', 'BRL');
+$seller = new \easyPaypal\Seller('SALE', null, 'BRL');
 //Add itens to sellers
-$item1 = new api\Item('Texugo', 'um texugo', 40.00, 1);
-$item2 = new api\Item('Texugo 2', 'outro texugo', 40.00, 1);
+$item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1);
+$item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request
@@ -53,6 +50,7 @@ if (isset($_GET['token'])) {
         $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $nvp->getToken());
         header('Location: ' . $url . '?' . http_build_query($query));
     } else {
+        var_dump($response);
         die('error on setExpressCheckout');
     }
 }
