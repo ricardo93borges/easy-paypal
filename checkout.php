@@ -23,6 +23,8 @@ $logoUrl = '';
 
 //Create NvpRequest
 $nvp = new \easyPaypal\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
+//set notify url
+//$nvp->setNotifyUrl('url');
 //Create sellers
 $seller = new \easyPaypal\Seller('SALE', $ref);
 //Add itens to sellers

@@ -19,6 +19,7 @@ class NvpRequest{
     private $paypalSandboxUrl;
     private $paypalUrl;
     private $headerImage;
+    private $notifyUrl;
 
     /**
      * NvpRequest constructor.
@@ -47,6 +48,22 @@ class NvpRequest{
         $this->headerImage = $headerImage;
         $this->paypalSandboxUrl = 'https://www.sandbox.paypal.com/br/cgi-bin/webscr';
         $this->paypalUrl = 'https://www.paypal.com/br/cgi-bin/webscr';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotifyUrl()
+    {
+        return $this->notifyUrl;
+    }
+
+    /**
+     * @param mixed $notifyUrl
+     */
+    public function setNotifyUrl($notifyUrl)
+    {
+        $this->notifyUrl = $notifyUrl;
     }
 
     /**
@@ -364,6 +381,10 @@ class NvpRequest{
             'CANCELURL' => $this->getCancelUrl(),
             'BUTTONSOURCE' => $this->getButtonSource()
         );
+
+        if($this->getNotifyUrl()){
+            $this->request['NOTIFYURL'] = $this->getNotifyUrl();
+        }
 
         $countSeller = 0;
         $countItem = 0;
