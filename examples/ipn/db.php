@@ -86,9 +86,10 @@ function createTables($tables){
         die($e->getMessage());
     }
 }
-
-createTables(array($sqlTableCustomer, $sqlTableNotification, $sqlTableTransaction));
-
+/*
+ * Create tables
+ */
+//createTables(array($sqlTableCustomer, $sqlTableNotification, $sqlTableTransaction));
 function insert($table, $params){
     $con = connect();
     $stmt = $con->prepare("INSERT INTO $table VALUES(?, ?)");
