@@ -1,6 +1,6 @@
 <?php
 
-namespace easyPaypal;
+namespace easyPaypal\ipn;
 
 class Customer{
     private $id;

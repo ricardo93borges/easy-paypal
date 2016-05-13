@@ -6,7 +6,7 @@
  * Time: 16:39
  */
 
-namespace easyPaypal;
+namespace easyPaypal\ipn;
 
 
 class Ipn{
@@ -35,7 +35,7 @@ class Ipn{
      * @return boolean TRUE se a notificação for autência, ou FALSE se não for.
      *
      */
-    function isIPNValid(array $message){
+    function handleIpn(array $message){
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, $this->endpoint);
@@ -51,11 +51,11 @@ class Ipn{
         curl_close($curl);
 
         if(!empty($error) || $errno > 0 || $response != 'VERIFIED'){
-            return false;
+            return array('error'=>'Not verified', 'errors'=>$error);
         }
 
         if ($_POST['receiver_email'] != $this->getReceiverEmail()) {
-            return false;
+            return array('error'=>'Receiver mail is different', 'errors'=>array('expected'=>$this->receiverEmail, 'returned'=>$_POST['receiver_email']));
         }
 
         $arr = array_merge(array(

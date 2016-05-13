@@ -1,12 +1,12 @@
 <?php
-include 'vendor/autoload.php';
-include "creed.php";
+include __DIR__.'/../../vendor/autoload.php';
+include "credentials.php";
 
 
 //App url
-$appUrl = "http://localhost/easy-paypal/";
-$returnUrl = $appUrl."checkout_step_by_step.php";
-$cancelUrl = $appUrl."checkout_step_by_step.php";
+$appUrl = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$returnUrl = $appUrl;
+$cancelUrl = $appUrl;
 $logoUrl = '';
 
 //Create NvpRequest

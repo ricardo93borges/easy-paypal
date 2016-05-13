@@ -1,4 +1,17 @@
 <?php
+/*    $str = "String";
+    $str = utf8_encode($str);
+    print mb_detect_encoding($str);
+    print "\n";
+    $str = mb_convert_encoding($str, 'utf-8', mb_detect_encoding($str));
+    print mb_detect_encoding($str);
+    print "\n";
+    die();
+*/
+    function toUtf8($str){
+        return mb_convert_encoding($str, 'utf-8', mb_detect_encoding($str));
+    }
+
 	/**
      * Verifica se uma notificação IPN é válida, fazendo a autenticação
      * da mensagem segundo o protocolo de segurança do serviço.
@@ -74,6 +87,7 @@
     //As notificações sempre serão via HTTP POST, então verificamos o método
 	//utilizado na requisição, antes de fazer qualquer coisa.
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        ipnLog(mb_detect_encoding($_SERVER['REQUEST_METHOD']));
         ipnLog($_SERVER['REQUEST_METHOD']);
 	    //Antes de trabalhar com a notificação, precisamos verificar se ela
 	    //é válida e, se não for, descartar.
@@ -87,7 +101,7 @@
         ipnLog($receiver_email);
 	    if ($_POST['receiver_email'] == $receiver_email) {
             foreach($_POST as $p) {
-                ipnLog($p);
+                ipnLog(toUtf8($p));
             }
 	        //Está tudo correto, somos o destinatário da notificação, vamos
 	        //gravar um log dessa notificação.

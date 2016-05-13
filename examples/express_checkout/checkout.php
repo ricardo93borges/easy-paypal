@@ -1,6 +1,6 @@
 <?php
-include 'vendor/autoload.php';
-include "creed.php";
+include __DIR__.'/../../vendor/autoload.php';
+include "credentials.php";
 
 /*
  * Referencia / Invoice ID: Campo importante para o acompanhamento e controle interno do comerciante
@@ -16,9 +16,9 @@ include "creed.php";
 $ref=null;
 
 //App url
-$appUrl = "http://localhost/easy-paypal/";
-$returnUrl = $appUrl."checkout.php";
-$cancelUrl = $appUrl."checkout.php";
+$appUrl = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$returnUrl = $appUrl;
+$cancelUrl = $appUrl;
 $logoUrl = '';
 
 //Create NvpRequest
