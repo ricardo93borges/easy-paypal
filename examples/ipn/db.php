@@ -24,9 +24,7 @@ $sqlTableNotification = "CREATE TABLE `notification` (
     `pending_reason` VARCHAR(17) DEFAULT NULL,
     `reason_code` VARCHAR(31) DEFAULT NULL,
     `custom` VARCHAR(45) DEFAULT NULL,
-    `invoice` VARCHAR(45) DEFAULT NULL,
-    `notification` MEDIUMTEXT NOT NULL,
-    `hash` CHAR(32) NOT NULL,
+    `invoice` VARCHAR(45) DEFAULT NULL
     PRIMARY KEY (`id`),
     UNIQUE KEY `hash_UNIQUE` (`hash`),
     KEY `custom` (`custom`,`payment_status`),
@@ -86,15 +84,38 @@ function createTables($tables){
         die($e->getMessage());
     }
 }
+/**
+ * @param String $data
+ */
+function dbLog($data){
+    //Check log.log file permissions
+    $date = date('Y-m-d H:i');
+    file_put_contents("log.log", "[".$date."]".$data." \n", FILE_APPEND);
+}
+
+function insert($table, $params){
+    try {
+        $values = array();
+        foreach ($params as $k => $V) {
+            $values[] = ":" . $k;
+        }
+
+        $con = connect();
+        $strValues = implode(",", $values);
+
+        $stmt = $con->prepare("INSERT INTO $table VALUES($strValues)");
+
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v);
+        }
+
+        $stmt->execute();
+    }catch (Exception $e){
+        dbLog($e->getMessage());
+    }
+}
+
 /*
  * Create tables
  */
 //createTables(array($sqlTableCustomer, $sqlTableNotification, $sqlTableTransaction));
-function insert($table, $params){
-    $con = connect();
-    $stmt = $con->prepare("INSERT INTO $table VALUES(?, ?)");
-    foreach($params as $param) {
-        $stmt->bindParam(1, $param);
-    }
-    $stmt->execute();
-}

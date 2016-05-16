@@ -42,6 +42,9 @@ class Ipn{
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_SSLVERSION, 6);
+        //curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
+        //curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($message));
 
         $response = curl_exec($curl);
@@ -88,6 +91,9 @@ class Ipn{
 	        'tax' => null,
 	    ), $message);
 
+        //$this->ipnLog("....");
+        //$this->ipnLog(json_encode($arr));
+
         $notification = new Notification(
             null,
             $arr['txn_id'],
@@ -101,7 +107,7 @@ class Ipn{
 
         $customer = new Customer(
             null,
-            $arr['address_count'],
+            $arr['address_country'],
             $arr['address_city'],
             $arr['address_country_code'],
             $arr['address_name'],
@@ -184,5 +190,4 @@ class Ipn{
     {
         $this->endpoint = $endpoint;
     }
-
 }

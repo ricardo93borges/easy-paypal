@@ -1,5 +1,5 @@
 <?php
-include __DIR__."/../vendor/autoload.php";
+include __DIR__."/../../vendor/autoload.php";
 include 'db.php';
 
 $receiverEmail = 'ricardo_borges26-facilitator_api1.hotmail.com';
@@ -8,28 +8,39 @@ $sandbox = true;
 $ipn = new \easyPaypal\ipn\Ipn($receiverEmail, $sandbox);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    ipnLog("init");
     $response = $ipn->handleIpn($_POST);
 
     if(empty($response)){
-        die("empty response");
+        ipnLog("empty response");
+        die();
     }
 
     if (isset($response['error'])) {
-        die(print_r($response));
+        ipnLog("error");
+        ipnLog(json_encode($response));
+        die();
     }
 
     $notification = $response['notification'];
     $customer = $response['customer'];
     $trasaction = $response['transaction'];
 
-
-    print_r($notification);
-    print_r($customer);
-    print_r($trasaction);
+    //ipnLog("....");
+    //ipnLog(json_encode($notification));
 
     addNotification($notification);
     addCustomer($customer);
     addTransaction($trasaction);
+}
+
+/**
+ * @param String $data
+ */
+function ipnLog($data){
+    //Check log.log file permissions
+    $date = date('Y-m-d H:i');
+    file_put_contents("log.log", "[".$date."]".$data." \n", FILE_APPEND);
 }
 
 function addNotification($notification){
@@ -83,7 +94,7 @@ function addTransaction($transaction){
 	    'shipping' => $transaction->getShipping(),
 	    'tax' => $transaction->getTax(),
 	    'payment_status' => $transaction->getPaymentStatus(),
-	    'pending_reason' => $transaction->getPedingReason(),
+	    'pending_reason' => $transaction->getPendingReason(),
 	    'reason_code' => $transaction->getReasonCode(),
     );
     insert('transaction', $params);
