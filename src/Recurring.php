@@ -1,63 +1,54 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: ricardo
+ * Date: 18/05/16
+ * Time: 14:27
+ */
+
 namespace easyPaypal;
 
-class NvpRequest extends Request{
-
+class Recurring extends Request
+{
+    private $billingPeriod;
+    private $billingFrequency;
+    private $totalBillingCycles;
+    private $maxFailedPayments;
+    private $profileStartDate;
+    private $description;
+    private $amount;
     private $method;
+    private $headerImage;
     private $token;
     private $payerId;
-    private $headerImage;
 
     /**
-     * NvpRequest constructor.
-     * @param $user
-     * @param $password
-     * @param $signature
-     * @param $sandbox
-     * @param string $method
-     * @param $returnUrl
-     * @param $cancelUrl
-     * @param string $headerImage
-     * @param string $buttonSource
-     * @param string $localecode
-     * @param string $version
+     * Recurring constructor.
+     * @param $billingPeriod
+     * @param $billingFrequency
+     * @param $totalBillingCycles
+     * @param $maxFailedPayments
+     * @param $profileStartDate
+     * @param $description
+     * @param $amount
      */
-    public function __construct($user, $password, $signature, $sandbox, $method='setExpressCheckout', $returnUrl, $cancelUrl, $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR'){
+    public function __construct($user, $password, $signature, $sandbox, $returnUrl, $cancelUrl, $amount, $description, $method='setExpressCheckout', $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR', $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null)
+    {
         parent::__construct($sandbox, $user, $password, $signature, $localecode, $returnUrl, $cancelUrl, $buttonSource, $version, $currencyCode, $countryCode);
+        if(!$profileStartDate){
+            //$profileStartDate = gmdate("Y-m-d\TH:i:s\Z");
+            $dt = new \DateTime();
+            $dt->add(new \DateInterval('PT1H'));
+            $profileStartDate = $dt->format("Y-m-d H:i:s");
+        }
+        $this->billingPeriod = $billingPeriod;
+        $this->billingFrequency = $billingFrequency;
+        $this->maxFailedPayments = $maxFailedPayments;
+        $this->profileStartDate = $profileStartDate;
+        $this->description = $description;
+        $this->amount = $amount;
         $this->method = $method;
         $this->headerImage = $headerImage;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
-
-    /**
-     * @param mixed $method
-     */
-    public function setMethod($method)
-    {
-        $this->method = $method;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param mixed $token
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
     }
 
     /**
@@ -77,6 +68,134 @@ class NvpRequest extends Request{
     }
 
     /**
+     * @return mixed
+     */
+    public function getBillingPeriod()
+    {
+        return $this->billingPeriod;
+    }
+
+    /**
+     * @param mixed $billingPeriod
+     */
+    public function setBillingPeriod($billingPeriod)
+    {
+        $this->billingPeriod = $billingPeriod;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBillingFrequency()
+    {
+        return $this->billingFrequency;
+    }
+
+    /**
+     * @param mixed $billingFrequency
+     */
+    public function setBillingFrequency($billingFrequency)
+    {
+        $this->billingFrequency = $billingFrequency;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalBillingCycles()
+    {
+        return $this->totalBillingCycles;
+    }
+
+    /**
+     * @param mixed $totalBillingCycles
+     */
+    public function setTotalBillingCycles($totalBillingCycles)
+    {
+        $this->totalBillingCycles = $totalBillingCycles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaxFailedPayments()
+    {
+        return $this->maxFailedPayments;
+    }
+
+    /**
+     * @param mixed $maxFailedPayments
+     */
+    public function setMaxFailedPayments($maxFailedPayments)
+    {
+        $this->maxFailedPayments = $maxFailedPayments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfileStartDate()
+    {
+        return $this->profileStartDate;
+    }
+
+    /**
+     * @param mixed $profileStartDate
+     */
+    public function setProfileStartDate($profileStartDate)
+    {
+        $this->profileStartDate = $profileStartDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param mixed $amount
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param mixed $method
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+
+    /**
      * @return string
      */
     public function getHeaderImage()
@@ -90,6 +209,43 @@ class NvpRequest extends Request{
     public function setHeaderImage($headerImage)
     {
         $this->headerImage = $headerImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    function CreateRecurringPaymentsProfile(){
+        $this->request['METHOD'] = 'CreateRecurringPaymentsProfile';
+        $this->request['BILLINGPERIOD'] = $this->getBillingPeriod();
+        $this->request['BILLINGFREQUENCY'] = $this->getBillingFrequency();
+        $this->request['MAXFAILEDPAYMENTS'] = $this->getMaxFailedPayments();
+        $this->request['PROFILESTARTDATE'] = $this->getProfileStartDate();
+        $this->request['DESC'] = $this->getDescription();
+        $this->request['AMT'] = $this->getAmount();
+        $this->request['CURRENCYCODE'] = $this->getCurrencyCode();
+        $this->request['COUNTRYCODE'] = $this->getCountryCode();
+
+        if($this->getTotalBillingCycles()) {
+            $this->request['TOTALBILLINGCYCLES'] = $this->getTotalBillingCycles();
+        }
+
+        //print "CreateRecurringPaymentsProfile";
+        //die(print_r($this->request));
+        $response = $this->exec();
+        return $response;
     }
 
     function setExpressCheckout(){
@@ -137,7 +293,7 @@ class NvpRequest extends Request{
                 //header('Location: ' . $url . '?' . http_build_query($query));
                 $redirectURL = sprintf('%s?%s', $url, http_build_query($query));
                 //carrega a página de redirecionamento
-	            require 'redirect.php';
+                require 'redirect.php';
             } else{
                 return array('error'=>$response);
             }
@@ -187,6 +343,8 @@ class NvpRequest extends Request{
                 $this->request['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
                 $this->request['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
                 $this->request['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
+                $this->request['L_BILLINGTYPE'.$countItem] = 'RecurringPayments';
+                $this->request['L_BILLINGAGREEMENTDESCRIPTION'.$countItem] = $this->getDescription();
                 $countItem++;
             }
             $countSeller++;
@@ -208,6 +366,8 @@ class NvpRequest extends Request{
             case 'expressCheckout':
                 $response = $this->expressCheckout();
                 break;
+            case 'CreateRecurringPaymentsProfile':
+                $response = $this->createRecurringPaymentsProfile();
         }
         return $response;
     }

@@ -10,16 +10,18 @@ $cancelUrl = $appUrl;
 $logoUrl = '';
 
 //Create NvpRequest
-$nvp = new \easyPaypal\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
+//$nvp = new \easyPaypal\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
+$nvp = new \easyPaypal\Recurring($creed['username'], $creed['password'], $creed['signature'], true, $returnUrl, $cancelUrl, 100, 'Recurring payment test');
 //Create sellers
 $seller = new \easyPaypal\Seller('SALE', null, 'BRL');
 //Add itens to sellers
-$item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1);
-$item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);
+$item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1, 'RecurringPayments', 'Recurring payment item');
+$item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1, 'RecurringPayments', 'Recurring payment item');
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request
 $nvp->setRequest($seller);
+//die(print_r($nvp->getRequest()));
 
 //If theres token do getExpressCheckoutDetails and doExpressCheckoutPayment
 if (isset($_GET['token'])) {
@@ -32,9 +34,15 @@ if (isset($_GET['token'])) {
     //doExpressCheckoutPayment
     if (isset($response['ACK']) && $response['ACK'] == 'Success') {
         $nvp->setPayerId($response['PAYERID']);
-        $nvp->setMethod('doExpressCheckoutPayment');
-        $response = $nvp->send();
-        var_dump($response);
+
+        //$nvp->setMethod('doExpressCheckoutPayment');
+        //$response = $nvp->send();
+
+        $nvp->setMethod('CreateRecurringPaymentsProfile');
+        $response2 = $nvp->send();
+        //die(print_r($nvp->getRequest()));
+        //var_dump($response);
+        var_dump($response2);
     }else{
         die('error on doExpressCheckoutPayment');
     }

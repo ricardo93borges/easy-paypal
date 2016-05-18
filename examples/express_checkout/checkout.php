@@ -16,7 +16,7 @@ include "credentials.php";
 $ref=null;
 
 //App url
-$appUrl = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$appUrl = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $returnUrl = $appUrl;
 $cancelUrl = $appUrl;
 $logoUrl = '';

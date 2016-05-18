@@ -7,6 +7,8 @@ class Item
     private $description;
     private $amount;
     private $quantity;
+    private $billingType;
+    private $billingAgreementDescription;
 
     /**
      * Item constructor.
@@ -15,12 +17,14 @@ class Item
      * @param double $amount
      * @param double $quantity
      */
-    public function __construct($name, $description, $amount, $quantity)
+    public function __construct($name, $description, $amount, $quantity, $billingType=null, $billingAgreementDescription=null)
     {
         $this->name = $name;
         $this->description = $description;
         $this->amount = $amount;
         $this->quantity = $quantity;
+        $this->billingType = $billingType;
+        $this->billingAgreementDescription = $billingAgreementDescription;
     }
 
     /**
@@ -85,6 +89,38 @@ class Item
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBillingType()
+    {
+        return $this->billingType;
+    }
+
+    /**
+     * @param mixed $billingType
+     */
+    public function setBillingType($billingType)
+    {
+        $this->billingType = $billingType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBillingAgreementDescription()
+    {
+        return $this->billingAgreementDescription;
+    }
+
+    /**
+     * @param mixed $billingAgreementDescription
+     */
+    public function setBillingAgreementDescription($billingAgreementDescription)
+    {
+        $this->billingAgreementDescription = $billingAgreementDescription;
     }
 
 }

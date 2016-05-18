@@ -8,7 +8,17 @@
 
 namespace easyPaypal\ipn;
 
+/**
+ * TODO
+ * https://www.paypal-brasil.com.br/desenvolvedores/tutorial/express-checkout-pagamentos-recorrentes/
+ * ADD L_PAYMENTREQUEST_m_ITEMCATEGORYn = (Digital | Physical)
+ * Validate: 1 - 10 payments, PAYMENTREQUEST_m 1 >= m <= 10
+ */
 
+/**
+ * Class Ipn
+ * @package easyPaypal\ipn
+ */
 class Ipn{
 
     private $sandbox;
