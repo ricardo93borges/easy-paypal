@@ -21,6 +21,11 @@ class Recurring extends Request
     private $headerImage;
     private $token;
     private $payerId;
+    private $autobillAmt;
+    private $trialBillingPeriod;
+    private $trialBillingFrequency;
+    private $trialAmt;
+    private $trialTotalBillingCycles;
 
     /**
      * Recurring constructor.
@@ -32,7 +37,7 @@ class Recurring extends Request
      * @param $description
      * @param $amount
      */
-    public function __construct($user, $password, $signature, $sandbox, $returnUrl, $cancelUrl, $amount, $description, $method='setExpressCheckout', $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR', $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null)
+    public function __construct($user, $password, $signature, $sandbox, $returnUrl, $cancelUrl, $amount, $description, $method='setExpressCheckout', $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR', $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null, $autobillAmt=0)
     {
         parent::__construct($sandbox, $user, $password, $signature, $localecode, $returnUrl, $cancelUrl, $buttonSource, $version, $currencyCode, $countryCode);
         if(!$profileStartDate){
@@ -49,6 +54,91 @@ class Recurring extends Request
         $this->amount = $amount;
         $this->method = $method;
         $this->headerImage = $headerImage;
+        $this->autobillAmt = $autobillAmt;
+        $this->trialAmt = null;
+        $this->trialBillingFrequency = null;
+        $this->trialBillingPeriod = null;
+        $this->trialTotalBillingCycles = null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrialBillingPeriod()
+    {
+        return $this->trialBillingPeriod;
+    }
+
+    /**
+     * @param mixed $trialBillingPeriod
+     */
+    public function setTrialBillingPeriod($trialBillingPeriod)
+    {
+        $this->trialBillingPeriod = $trialBillingPeriod;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrialBillingFrequency()
+    {
+        return $this->trialBillingFrequency;
+    }
+
+    /**
+     * @param mixed $trialBillingFrequency
+     */
+    public function setTrialBillingFrequency($trialBillingFrequency)
+    {
+        $this->trialBillingFrequency = $trialBillingFrequency;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrialAmt()
+    {
+        return $this->trialAmt;
+    }
+
+    /**
+     * @param mixed $trialAmt
+     */
+    public function setTrialAmt($trialAmt)
+    {
+        $this->trialAmt = $trialAmt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrialTotalBillingCycles()
+    {
+        return $this->trialTotalBillingCycles;
+    }
+
+    /**
+     * @param mixed $trialTotalBillingCycles
+     */
+    public function setTrialTotalBillingCycles($trialTotalBillingCycles)
+    {
+        $this->trialTotalBillingCycles = $trialTotalBillingCycles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAutobillAmt()
+    {
+        return $this->autobillAmt;
+    }
+
+    /**
+     * @param mixed $autobillAmt
+     */
+    public function setAutobillAmt($autobillAmt)
+    {
+        $this->autobillAmt = $autobillAmt;
     }
 
     /**
@@ -227,7 +317,7 @@ class Recurring extends Request
         $this->token = $token;
     }
 
-    function CreateRecurringPaymentsProfile(){
+    function createRecurringPaymentsProfile(){
         $this->request['METHOD'] = 'CreateRecurringPaymentsProfile';
         $this->request['BILLINGPERIOD'] = $this->getBillingPeriod();
         $this->request['BILLINGFREQUENCY'] = $this->getBillingFrequency();
@@ -237,9 +327,17 @@ class Recurring extends Request
         $this->request['AMT'] = $this->getAmount();
         $this->request['CURRENCYCODE'] = $this->getCurrencyCode();
         $this->request['COUNTRYCODE'] = $this->getCountryCode();
+        $this->request['AUTOBILLAMT'] = $this->getAutobillAmt();
 
         if($this->getTotalBillingCycles()) {
             $this->request['TOTALBILLINGCYCLES'] = $this->getTotalBillingCycles();
+        }
+
+        if($this->trialTotalBillingCycles && $this->trialAmt && $this->trialBillingPeriod && $this->trialBillingFrequency){
+            $this->request['TRIALBILLINGPERIOD'] = $this->getTrialBillingPeriod();
+            $this->request['TRIALBILLINGFREQUENCY'] = $this->getTrialBillingPeriod();
+            $this->request['TRIALAMT'] = $this->getTrialBillingPeriod();
+            $this->request['TRIALTOTALBILLINGCYCLES'] = $this->getTrialBillingPeriod();
         }
 
         //print "CreateRecurringPaymentsProfile";
@@ -277,8 +375,8 @@ class Recurring extends Request
 
             if (isset($response['TOKEN']) && $response['ACK'] == 'Success') {
                 $this->payerId = $response['PAYERID'];
-                //3-doExpressCheckoutPayment
-                $response = $this->doExpressCheckoutPayment();
+                //3-createRecurringPaymentsProfile
+                $response = $this->createRecurringPaymentsProfile();
                 return $response;
             } else{
                 return array('error'=>$response);
