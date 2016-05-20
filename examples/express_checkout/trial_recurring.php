@@ -10,7 +10,9 @@ $cancelUrl = $appUrl;
 $logoUrl = '';
 
 //Create Recurring
-$nvp = new \easyPaypal\Recurring($creed['username'], $creed['password'], $creed['signature'], true, $returnUrl, $cancelUrl, 100, 'Recurring payment test', 'expressCheckout');
+$request = new \easyPaypal\Request(true, $creed['username'], $creed['password'], $creed['signature'], $returnUrl, $cancelUrl, $logoUrl);
+$nvp = new \easyPaypal\Recurring('expressCheckout', 100, 'Recurring payment test');
+$nvp->setRequest($request);
 //Trial
 $nvp->setTrialAmt(0);
 $nvp->setTrialBillingFrequency(1);
@@ -24,6 +26,6 @@ $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1, 'RecurringPa
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request
-$nvp->setRequest($seller);
+$nvp->setParams($seller);
 $response = $nvp->send($seller);
 var_dump($response);

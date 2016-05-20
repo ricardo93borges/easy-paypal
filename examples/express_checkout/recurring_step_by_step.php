@@ -10,7 +10,9 @@ $cancelUrl = $appUrl;
 $logoUrl = '';
 
 //Create Recurring
-$nvp = new \easyPaypal\Recurring($creed['username'], $creed['password'], $creed['signature'], true, $returnUrl, $cancelUrl, 100, 'Recurring payment test');
+$request = new \easyPaypal\Request(true, $creed['username'], $creed['password'], $creed['signature'], $returnUrl, $cancelUrl, $logoUrl);
+$nvp = new \easyPaypal\Recurring('setExpressCheckout', 100, 'Recurring payment test');
+$nvp->setRequest($request);
 //Create sellers
 $seller = new \easyPaypal\Seller('SALE', null, 'BRL');
 //Add itens to sellers
@@ -19,7 +21,7 @@ $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1, 'RecurringPa
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request
-$nvp->setRequest($seller);
+$nvp->setParams($seller);
 
 //If theres token do getExpressCheckoutDetails and doExpressCheckoutPayment
 if (isset($_GET['token'])) {
@@ -45,7 +47,7 @@ if (isset($_GET['token'])) {
     $response = $nvp->send();
 
     if (isset($response['ACK']) && $response['ACK'] == 'Success') {
-        $url =  $nvp->isSandbox() ? $nvp->getPaypalSandboxUrl() : $nvp->getPaypalUrl();
+        $url =  $request->isSandbox() ? $request->getPaypalSandboxUrl() : $request->getPaypalUrl();
         $nvp->setToken($response['TOKEN']);
         $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $nvp->getToken());
         header('Location: ' . $url . '?' . http_build_query($query));

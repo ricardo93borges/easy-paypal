@@ -11,7 +11,6 @@ namespace easyPaypal;
 
 class Request
 {
-
     private $sandbox;
     private $user;
     private $password;
@@ -25,6 +24,8 @@ class Request
     private $countryCode;
     private $paypalSandboxUrl;
     private $paypalUrl;
+    private $params;
+    private $headerImage;
 
     /**
      * Request constructor.
@@ -32,13 +33,15 @@ class Request
      * @param $user
      * @param $password
      * @param $signature
-     * @param $request
-     * @param $localecode
-     * @param $returnUrl
-     * @param $cancelUrl
-     * @param $buttonSource
+     * @param string $localecode
+     * @param string $returnUrl
+     * @param string $cancelUrl
+     * @param string $buttonSource
+     * @param string $version
+     * @param string $currencyCode
+     * @param string $countryCode
      */
-    public function __construct($sandbox, $user, $password, $signature, $localecode, $returnUrl, $cancelUrl, $buttonSource, $version, $currencyCode, $countryCode)
+    public function __construct($sandbox, $user, $password, $signature, $returnUrl='', $cancelUrl='', $headerImage='', $params=array(), $buttonSource='', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR')
     {
         $this->sandbox = $sandbox;
         $this->user = $user;
@@ -51,10 +54,39 @@ class Request
         $this->version = $version;
         $this->currencyCode = $currencyCode;
         $this->countryCode = $countryCode;
+        $this->headerImage = $headerImage;
         $this->paypalSandboxUrl = 'https://www.sandbox.paypal.com/br/cgi-bin/webscr';
         $this->paypalUrl = 'https://www.paypal.com/br/cgi-bin/webscr';
+        $this->setParams($params);
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams($params)
+    {
+        $this->params = array(
+            'HDRIMG' =>$this->getHeaderImage(),
+            'LOCALECODE' => $this->getLocalecode(),
+            'USER' => $this->getUser(),
+            'PWD' => $this->getPassword(),
+            'SIGNATURE' => $this->getSignature(),
+            'VERSION' => $this->getVersion(),
+            'RETURNURL' => $this->getReturnUrl(),
+            'CANCELURL' => $this->getCancelUrl(),
+            'BUTTONSOURCE' => $this->getButtonSource()
+        );
+        $this->params = array_merge($this->params, $params);
+    }
     /**
      * @return string
      */
@@ -263,7 +295,24 @@ class Request
         $this->countryCode = $countryCode;
     }
 
+    /**
+     * @return string
+     */
+    public function getHeaderImage()
+    {
+        return $this->headerImage;
+    }
+
+    /**
+     * @param string $headerImage
+     */
+    public function setHeaderImage($headerImage)
+    {
+        $this->headerImage = $headerImage;
+    }
+
     public function exec(){
+        //die(print_r($this->params));
         $apiEndpoint  = 'https://api-3t.' . ($this->isSandbox() ? 'sandbox.': null);
         $apiEndpoint .= 'paypal.com/nvp';
 
@@ -272,7 +321,7 @@ class Request
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request));
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->params));
 
         $response = urldecode(curl_exec($curl));
         $response = $this->sanitize($response);

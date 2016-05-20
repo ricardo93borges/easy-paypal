@@ -18,7 +18,6 @@ class Recurring extends Request
     private $description;
     private $amount;
     private $method;
-    private $headerImage;
     private $token;
     private $payerId;
     private $autobillAmt;
@@ -26,22 +25,23 @@ class Recurring extends Request
     private $trialBillingFrequency;
     private $trialAmt;
     private $trialTotalBillingCycles;
+    private $request;
+    private $params;
 
     /**
      * Recurring constructor.
-     * @param $billingPeriod
-     * @param $billingFrequency
-     * @param $totalBillingCycles
-     * @param $maxFailedPayments
-     * @param $profileStartDate
-     * @param $description
      * @param $amount
+     * @param $description
+     * @param string $method
+     * @param string $billingPeriod
+     * @param int $billingFrequency
+     * @param int $maxFailedPayments
+     * @param null $profileStartDate
+     * @param int $autobillAmt
      */
-    public function __construct($user, $password, $signature, $sandbox, $returnUrl, $cancelUrl, $amount, $description, $method='setExpressCheckout', $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR', $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null, $autobillAmt=0)
+    public function __construct($method='setExpressCheckout', $amount, $description, $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null, $autobillAmt=0)
     {
-        parent::__construct($sandbox, $user, $password, $signature, $localecode, $returnUrl, $cancelUrl, $buttonSource, $version, $currencyCode, $countryCode);
         if(!$profileStartDate){
-            //$profileStartDate = gmdate("Y-m-d\TH:i:s\Z");
             $dt = new \DateTime();
             $dt->add(new \DateInterval('PT1H'));
             $profileStartDate = $dt->format("Y-m-d H:i:s");
@@ -53,7 +53,6 @@ class Recurring extends Request
         $this->description = $description;
         $this->amount = $amount;
         $this->method = $method;
-        $this->headerImage = $headerImage;
         $this->autobillAmt = $autobillAmt;
         $this->trialAmt = null;
         $this->trialBillingFrequency = null;
@@ -286,22 +285,6 @@ class Recurring extends Request
     }
 
     /**
-     * @return string
-     */
-    public function getHeaderImage()
-    {
-        return $this->headerImage;
-    }
-
-    /**
-     * @param string $headerImage
-     */
-    public function setHeaderImage($headerImage)
-    {
-        $this->headerImage = $headerImage;
-    }
-
-    /**
      * @return mixed
      */
     public function getToken()
@@ -317,44 +300,50 @@ class Recurring extends Request
         $this->token = $token;
     }
 
+    function exec(){
+        $this->request->setParams($this->params);
+        //die(print_r($this->request->getParams()));
+        return $this->request->exec();
+    }
+
     function createRecurringPaymentsProfile(){
-        $this->request['METHOD'] = 'CreateRecurringPaymentsProfile';
-        $this->request['BILLINGPERIOD'] = $this->getBillingPeriod();
-        $this->request['BILLINGFREQUENCY'] = $this->getBillingFrequency();
-        $this->request['MAXFAILEDPAYMENTS'] = $this->getMaxFailedPayments();
-        $this->request['PROFILESTARTDATE'] = $this->getProfileStartDate();
-        $this->request['DESC'] = $this->getDescription();
-        $this->request['AMT'] = $this->getAmount();
-        $this->request['CURRENCYCODE'] = $this->getCurrencyCode();
-        $this->request['COUNTRYCODE'] = $this->getCountryCode();
-        $this->request['AUTOBILLAMT'] = $this->getAutobillAmt();
+        $this->params['METHOD'] = 'CreateRecurringPaymentsProfile';
+        $this->params['BILLINGPERIOD'] = $this->getBillingPeriod();
+        $this->params['BILLINGFREQUENCY'] = $this->getBillingFrequency();
+        $this->params['MAXFAILEDPAYMENTS'] = $this->getMaxFailedPayments();
+        $this->params['PROFILESTARTDATE'] = $this->getProfileStartDate();
+        $this->params['DESC'] = $this->getDescription();
+        $this->params['AMT'] = $this->getAmount();
+        $this->params['CURRENCYCODE'] = $this->getCurrencyCode();
+        $this->params['COUNTRYCODE'] = $this->getCountryCode();
+        $this->params['AUTOBILLAMT'] = $this->getAutobillAmt();
 
         if($this->getTotalBillingCycles()) {
-            $this->request['TOTALBILLINGCYCLES'] = $this->getTotalBillingCycles();
+            $this->params['TOTALBILLINGCYCLES'] = $this->getTotalBillingCycles();
         }
 
         if($this->trialTotalBillingCycles && $this->trialAmt && $this->trialBillingPeriod && $this->trialBillingFrequency){
-            $this->request['TRIALBILLINGPERIOD'] = $this->getTrialBillingPeriod();
-            $this->request['TRIALBILLINGFREQUENCY'] = $this->getTrialBillingPeriod();
-            $this->request['TRIALAMT'] = $this->getTrialBillingPeriod();
-            $this->request['TRIALTOTALBILLINGCYCLES'] = $this->getTrialBillingPeriod();
+            $this->params['TRIALBILLINGPERIOD'] = $this->getTrialBillingPeriod();
+            $this->params['TRIALBILLINGFREQUENCY'] = $this->getTrialBillingPeriod();
+            $this->params['TRIALAMT'] = $this->getTrialBillingPeriod();
+            $this->params['TRIALTOTALBILLINGCYCLES'] = $this->getTrialBillingPeriod();
         }
 
         //print "CreateRecurringPaymentsProfile";
-        //die(print_r($this->request));
+        //die(print_r($this->params));
         $response = $this->exec();
         return $response;
     }
 
     function setExpressCheckout(){
-        $this->request['METHOD'] = 'setExpressCheckout';
+        $this->params['METHOD'] = 'setExpressCheckout';
         $response = $this->exec();
         return $response;
     }
 
     function getExpressCheckoutDetails(){
-        $this->request['METHOD'] = 'getExpressCheckoutDetails';
-        $this->request['TOKEN'] = $this->getToken();
+        $this->params['METHOD'] = 'getExpressCheckoutDetails';
+        $this->params['TOKEN'] = $this->getToken();
         $response = $this->exec();
         return $response;
     }
@@ -385,7 +374,7 @@ class Recurring extends Request
             //1-setExpressCheckout
             $response = $this->setExpressCheckout();
             if (isset($response['ACK']) && $response['ACK'] == 'Success') {
-                $url =  $this->isSandbox() ? $this->getPaypalSandboxUrl() : $this->getPaypalUrl();
+                $url =  $this->request->isSandbox() ? $this->request->getPaypalSandboxUrl() : $this->request->getPaypalUrl();
                 $this->setToken($response['TOKEN']);
                 $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
                 //header('Location: ' . $url . '?' . http_build_query($query));
@@ -398,30 +387,38 @@ class Recurring extends Request
         }
     }
 
-    function getRequest(){
+    /**
+     * @return mixed
+     */
+    public function getRequest()
+    {
         return $this->request;
     }
+
     /**
-     * @param Seller array $sellers
+     * @param Request $request
      */
-    function setRequest($sellers){
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param mixed $params
+     */
+    public function setParams($sellers)
+    {
         if(!is_array($sellers)){
             $sellers = array($sellers);
         }
-
-        $this->request = array(
-            'HDRIMG' =>$this->getHeaderImage(),
-            'LOCALECODE' => $this->getLocalecode(),
-            'USER' => $this->getUser(),
-            'PWD' => $this->getPassword(),
-            'SIGNATURE' => $this->getSignature(),
-            'VERSION' => $this->getVersion(),
-            'METHOD'=> $this->getMethod(),
-            'RETURNURL' => $this->getReturnUrl(),
-            'CANCELURL' => $this->getCancelUrl(),
-            'BUTTONSOURCE' => $this->getButtonSource()
-        );
-
         /*
         if($this->getNotifyUrl()){
             $this->request['NOTIFYURL'] = $this->getNotifyUrl();
@@ -430,19 +427,19 @@ class Recurring extends Request
         $countSeller = 0;
         $countItem = 0;
         foreach($sellers as $seller){
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_PAYMENTACTION'] = $seller->getPaymentAction();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_ITEMAMT'] = $seller->getItemAmount();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_PAYMENTACTION'] = $seller->getPaymentAction();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_ITEMAMT'] = $seller->getItemAmount();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
 
             foreach($seller->getItems() as $item){
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
-                $this->request['L_BILLINGTYPE'.$countItem] = 'RecurringPayments';
-                $this->request['L_BILLINGAGREEMENTDESCRIPTION'.$countItem] = $this->getDescription();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
+                $this->params['L_BILLINGTYPE'.$countItem] = 'RecurringPayments';
+                $this->params['L_BILLINGAGREEMENTDESCRIPTION'.$countItem] = $this->getDescription();
                 $countItem++;
             }
             $countSeller++;

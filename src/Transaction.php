@@ -2,7 +2,7 @@
 
 namespace easyPaypal;
 
-class Transaction
+class Transaction extends Request
 {
     private $id;
     private $txnId;
@@ -19,6 +19,7 @@ class Transaction
     private $handling;
     private $shipping;
     private $tax;
+    private $request;
 
     /**
      * Transaction constructor.
@@ -38,7 +39,7 @@ class Transaction
      * @param $shipping
      * @param $tax
      */
-    public function __construct($id, $txnId, $txnType, $paymentStatus, $pendingReason, $reasonCode, $custom, $invoice, $payerId, $currency, $gross, $fee, $handling, $shipping, $tax)
+    public function __construct($id, $txnId, $txnType, $paymentStatus, $pendingReason, $reasonCode, $custom, $invoice, $payerId, $currency, $gross, $fee, $handling, $shipping, $tax, $request=null)
     {
         $this->id = $id;
         $this->txnId = $txnId;
@@ -55,6 +56,7 @@ class Transaction
         $this->handling = $handling;
         $this->shipping = $shipping;
         $this->tax = $tax;
+        $this->request = null;
     }
 
     /**
@@ -296,4 +298,61 @@ class Transaction
     {
         $this->tax = $tax;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param mixed $request
+     */
+    public function setRequest()
+    {
+
+        if(!is_array($sellers)){
+            $sellers = array($sellers);
+        }
+
+        $this->request = array(
+            'USER' => $this->getUser(),
+            'PWD' => $this->getPassword(),
+            'SIGNATURE' => $this->getSignature(),
+            'VERSION' => $this->getVersion(),
+            'METHOD'=> $this->getMethod(),
+            'RETURNURL' => $this->getReturnUrl(),
+            'CANCELURL' => $this->getCancelUrl(),
+            'BUTTONSOURCE' => $this->getButtonSource()
+        );
+
+        /*
+        if($this->getNotifyUrl()){
+            $this->request['NOTIFYURL'] = $this->getNotifyUrl();
+        }*/
+
+        $countSeller = 0;
+        $countItem = 0;
+        foreach($sellers as $seller){
+            $this->request['PAYMENTREQUEST_'.$countSeller.'_PAYMENTACTION'] = $seller->getPaymentAction();
+            $this->request['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
+            $this->request['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
+            $this->request['PAYMENTREQUEST_'.$countSeller.'_ITEMAMT'] = $seller->getItemAmount();
+            $this->request['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
+
+            foreach($seller->getItems() as $item){
+                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
+                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
+                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
+                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
+                $countItem++;
+            }
+            $countSeller++;
+        }
+
+    }
+
+
 }

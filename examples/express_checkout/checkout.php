@@ -22,7 +22,9 @@ $cancelUrl = $appUrl;
 $logoUrl = '';
 
 //Create Checkout
-$nvp = new \easyPaypal\Checkout($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
+$request = new \easyPaypal\Request(true, $creed['username'], $creed['password'], $creed['signature'], $returnUrl, $cancelUrl, $logoUrl);
+$nvp = new \easyPaypal\Checkout('expressCheckout');
+$nvp->setRequest($request);
 //set notify url
 //$nvp->setNotifyUrl('url');
 //Create sellers
@@ -33,6 +35,6 @@ $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request
-$nvp->setRequest($seller);
+$nvp->setParams($seller);
 $response = $nvp->send($seller);
 var_dump($response);

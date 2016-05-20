@@ -1,31 +1,21 @@
 <?php
 namespace easyPaypal;
 
-class Checkout extends Request{
+class Checkout{
 
     private $method;
     private $token;
     private $payerId;
-    private $headerImage;
+    private $request;
+    private $params;
 
     /**
      * Checkout constructor.
-     * @param $user
-     * @param $password
-     * @param $signature
-     * @param $sandbox
      * @param string $method
-     * @param $returnUrl
-     * @param $cancelUrl
      * @param string $headerImage
-     * @param string $buttonSource
-     * @param string $localecode
-     * @param string $version
      */
-    public function __construct($user, $password, $signature, $sandbox, $method='setExpressCheckout', $returnUrl, $cancelUrl, $headerImage='', $buttonSource='BR_EC_EMPRESA', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR'){
-        parent::__construct($sandbox, $user, $password, $signature, $localecode, $returnUrl, $cancelUrl, $buttonSource, $version, $currencyCode, $countryCode);
+    public function __construct($method='setExpressCheckout'){
         $this->method = $method;
-        $this->headerImage = $headerImage;
     }
 
     /**
@@ -76,39 +66,23 @@ class Checkout extends Request{
         $this->payerId = $payerId;
     }
 
-    /**
-     * @return string
-     */
-    public function getHeaderImage()
-    {
-        return $this->headerImage;
-    }
-
-    /**
-     * @param string $headerImage
-     */
-    public function setHeaderImage($headerImage)
-    {
-        $this->headerImage = $headerImage;
-    }
-
     function setExpressCheckout(){
-        $this->request['METHOD'] = 'setExpressCheckout';
+        $this->params['METHOD'] = 'setExpressCheckout';
         $response = $this->exec();
         return $response;
     }
 
     function getExpressCheckoutDetails(){
-        $this->request['METHOD'] = 'getExpressCheckoutDetails';
-        $this->request['TOKEN'] = $this->getToken();
+        $this->params['METHOD'] = 'getExpressCheckoutDetails';
+        $this->params['TOKEN'] = $this->getToken();
         $response = $this->exec();
         return $response;
     }
 
     function doExpressCheckoutPayment(){
-        $this->request['METHOD'] = 'doExpressCheckoutPayment';
-        $this->request['TOKEN'] = $this->getToken();
-        $this->request['PAYERID'] = $this->getPayerId();
+        $this->params['METHOD'] = 'doExpressCheckoutPayment';
+        $this->params['TOKEN'] = $this->getToken();
+        $this->params['PAYERID'] = $this->getPayerId();
         $response = $this->exec();
         return $response;
     }
@@ -131,7 +105,7 @@ class Checkout extends Request{
             //1-setExpressCheckout
             $response = $this->setExpressCheckout();
             if (isset($response['ACK']) && $response['ACK'] == 'Success') {
-                $url =  $this->isSandbox() ? $this->getPaypalSandboxUrl() : $this->getPaypalUrl();
+                $url =  $this->request->isSandbox() ? $this->request->getPaypalSandboxUrl() : $this->request->getPaypalUrl();
                 $this->setToken($response['TOKEN']);
                 $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
                 //header('Location: ' . $url . '?' . http_build_query($query));
@@ -144,49 +118,58 @@ class Checkout extends Request{
         }
     }
 
-    function getRequest(){
+    /**
+     * @return Request object
+     */
+    public function getRequest()
+    {
         return $this->request;
     }
+
     /**
-     * @param Seller array $sellers
+     * @param Request $request
      */
-    function setRequest($sellers){
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param mixed $params
+     */
+    public function setParams($sellers)
+    {
         if(!is_array($sellers)){
             $sellers = array($sellers);
         }
 
-        $this->request = array(
-            'HDRIMG' =>$this->getHeaderImage(),
-            'LOCALECODE' => $this->getLocalecode(),
-            'USER' => $this->getUser(),
-            'PWD' => $this->getPassword(),
-            'SIGNATURE' => $this->getSignature(),
-            'VERSION' => $this->getVersion(),
-            'METHOD'=> $this->getMethod(),
-            'RETURNURL' => $this->getReturnUrl(),
-            'CANCELURL' => $this->getCancelUrl(),
-            'BUTTONSOURCE' => $this->getButtonSource()
-        );
-
         /*
         if($this->getNotifyUrl()){
-            $this->request['NOTIFYURL'] = $this->getNotifyUrl();
+            $this->params['NOTIFYURL'] = $this->getNotifyUrl();
         }*/
 
         $countSeller = 0;
         $countItem = 0;
         foreach($sellers as $seller){
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_PAYMENTACTION'] = $seller->getPaymentAction();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_ITEMAMT'] = $seller->getItemAmount();
-            $this->request['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_PAYMENTACTION'] = $seller->getPaymentAction();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_ITEMAMT'] = $seller->getItemAmount();
+            $this->params['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
 
             foreach($seller->getItems() as $item){
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
-                $this->request['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
+                $this->params['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
                 $countItem++;
             }
             $countSeller++;
