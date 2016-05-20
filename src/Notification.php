@@ -25,8 +25,6 @@ class Notification
      * @param $reasonCode
      * @param $custom
      * @param $invoice
-     * @param $notification
-     * @param $hash
      */
     public function __construct($id, $txnId, $txnType, $receiverEmail, $paymentStatus, $pendingReason, $reasonCode, $custom, $invoice)
     {

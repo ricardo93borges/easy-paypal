@@ -29,14 +29,16 @@ class Request
 
     /**
      * Request constructor.
-     * @param $sandbox
-     * @param $user
-     * @param $password
-     * @param $signature
-     * @param string $localecode
+     * @param boolean $sandbox
+     * @param string $user
+     * @param string $password
+     * @param string $signature
      * @param string $returnUrl
      * @param string $cancelUrl
+     * @param string $headerImage
+     * @param array $params
      * @param string $buttonSource
+     * @param string $localecode
      * @param string $version
      * @param string $currencyCode
      * @param string $countryCode
@@ -59,8 +61,7 @@ class Request
         $this->paypalUrl = 'https://www.paypal.com/br/cgi-bin/webscr';
         $this->setParams($params);
     }
-
-
+    
     /**
      * @return mixed
      */

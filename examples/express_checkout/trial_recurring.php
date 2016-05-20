@@ -2,7 +2,6 @@
 include __DIR__.'/../../vendor/autoload.php';
 include "credentials.php";
 
-
 //App url
 $appUrl = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $returnUrl = $appUrl;

@@ -46,6 +46,9 @@ class Recurring extends Request
             $dt->add(new \DateInterval('PT1H'));
             $profileStartDate = $dt->format("Y-m-d H:i:s");
         }
+        if(!$this->validateBillingPeriod($billingPeriod)){
+            throw new Easy_paypal_Exception('Billing period invalid, billing period must be Day, Week, Month or Year');
+        }
         $this->billingPeriod = $billingPeriod;
         $this->billingFrequency = $billingFrequency;
         $this->maxFailedPayments = $maxFailedPayments;
@@ -60,6 +63,12 @@ class Recurring extends Request
         $this->trialTotalBillingCycles = null;
     }
 
+    public function validateBillingPeriod($billingPeriod){
+        if(in_array($billingPeriod, array('Day', 'Week', 'Month', 'Year'))){
+            return true;
+        }
+        return false;
+    }
     /**
      * @return mixed
      */
@@ -73,6 +82,9 @@ class Recurring extends Request
      */
     public function setTrialBillingPeriod($trialBillingPeriod)
     {
+        if(!$this->validateBillingPeriod($trialBillingPeriod)){
+            throw new Easy_paypal_Exception('Trial billing period invalid, billing period must be Day, Week, Month or Year');
+        }
         $this->trialBillingPeriod = $trialBillingPeriod;
     }
 
@@ -169,6 +181,9 @@ class Recurring extends Request
      */
     public function setBillingPeriod($billingPeriod)
     {
+        if(!$this->validateBillingPeriod($billingPeriod)){
+            throw new Easy_paypal_Exception('Billing period invalid, billing period must be Day, Week, Month or Year');
+        }
         $this->billingPeriod = $billingPeriod;
     }
 
