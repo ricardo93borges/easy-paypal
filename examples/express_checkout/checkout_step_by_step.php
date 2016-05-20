@@ -9,8 +9,8 @@ $returnUrl = $appUrl;
 $cancelUrl = $appUrl;
 $logoUrl = '';
 
-//Create NvpRequest
-$nvp = new \easyPaypal\NvpRequest($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
+//Create Checkout
+$nvp = new \easyPaypal\Checkout($creed['username'], $creed['password'], $creed['signature'], true, 'expressCheckout', $returnUrl, $cancelUrl, $logoUrl);
 //Create sellers
 $seller = new \easyPaypal\Seller('SALE', null, 'BRL');
 //Add itens to sellers

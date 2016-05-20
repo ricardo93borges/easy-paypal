@@ -5,7 +5,7 @@ include 'db.php';
 $receiverEmail = 'ricardo_borges26-facilitator_api1.hotmail.com';
 $sandbox = true;
 
-$ipn = new \easyPaypal\ipn\Ipn($receiverEmail, $sandbox);
+$ipn = new \easyPaypal\Ipn($receiverEmail, $sandbox);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ipnLog("init");

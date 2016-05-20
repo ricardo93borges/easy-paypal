@@ -1,7 +1,7 @@
 <?php
 namespace easyPaypal;
 
-class NvpRequest extends Request{
+class Checkout extends Request{
 
     private $method;
     private $token;
@@ -9,7 +9,7 @@ class NvpRequest extends Request{
     private $headerImage;
 
     /**
-     * NvpRequest constructor.
+     * Checkout constructor.
      * @param $user
      * @param $password
      * @param $signature

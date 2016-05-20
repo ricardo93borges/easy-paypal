@@ -9,7 +9,7 @@ $returnUrl = $appUrl;
 $cancelUrl = $appUrl;
 $logoUrl = '';
 
-//Create NvpRequest
+//Create Recurring
 $nvp = new \easyPaypal\Recurring($creed['username'], $creed['password'], $creed['signature'], true, $returnUrl, $cancelUrl, 100, 'Recurring payment test', 'expressCheckout');
 //Trial
 $nvp->setTrialAmt(0);

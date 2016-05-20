@@ -6,7 +6,7 @@
  * Time: 16:39
  */
 
-namespace easyPaypal\ipn;
+namespace easyPaypal;
 
 /**
  * TODO
