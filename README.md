@@ -49,7 +49,13 @@ $request->setLocalecode('pt_BR');
 
 ##### Express checkout
 
-Express Checkout é uma solução de pagamento do PayPal indicada para sites e lojas online que tenham integrações de médio e grande porte.
+Express Checkout é uma solução de pagamento do PayPal indicada para sites e lojas online que tenham integrações de médio e grande porte. Para realizar o express checkout crie um objeto Checkout e atribua um objeto Request a ele. Em cada requisição pode ser criada até 10 transações, isso é feito criando objetos Seller e atribuindo objetos Item a eles. Cada Seller irá gerar uma transação. Os objetos Seller são atribuídos ao Checkout pelo método setParams().
+
+Um Seller é criado usando os parâmetros:
+
+* $reference = Número de pedido para controle do comerciante. Esse campo descreve o número do pedido do cliente dentro de sua própria loja. É seu identificador interno, que pode ser utilizado para a PayPal para ajudá-lo a identificar as transações durante as notificações. Se for passado null será gerado uma string aleatória.
+
+O método setParams() deve ser chamado antes do método send() para que a requisição seja atualizada com os parâmetros adicionais se necessário.
 
 O limite de pagamentos/seller é 10 por requisição.
 
@@ -60,7 +66,7 @@ include "autoload.php";
 $ref=null;
 
 $request = new \easyPaypal\Request($sandbox, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
-$nvp = new \easyPaypal\Checkout('expressCheckout');
+$nvp = new \easyPaypal\Checkout();
 $nvp->setRequest($request);
 
 //Create sellers
@@ -74,10 +80,10 @@ $seller->addItem($item2);
 
 //Set request
 $nvp->setParams($seller);
-$response = $nvp->send($seller);
+$response = $nvp->send();
 ```
 
-O exemplo de express checkout passo a passo pode ser encontrado em examples/checkout_step_by_step.php
+O exemplo de express checkout passo a passo pode ser encontrado em examples/express_checkout/checkout_step_by_step.php
 
 ##### Criar perfil de recorrência
 
