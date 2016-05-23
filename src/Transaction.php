@@ -343,6 +343,49 @@ class Transaction extends Request
         }
     }
 
+    /**
+     * @param $transactionId
+     * @param $refundType (Full|Partial)
+     * @param $amount
+     * @param $currencyCode
+     * @param $note
+     * @param $payerId
+     * @param $invoiceId internal reference
+     */
+    function refundTransaction($transactionId, $refundType, $amount=null, $currencyCode=null, $note=null, $payerId=null, $invoiceId=null){
+        //Set params
+        $this->params['METHOD'] = 'RefundTransaction';
+        $this->params['TRANSACTIONID'] = $transactionId;
+        $this->params['REFUNDTYPE'] = $refundType;
+        //Validate
+        if(!in_array($refundType, array('Full', 'Partial'))){
+            throw new Easy_paypal_Exception('Refund type must be Full or Partial');
+        }
+        if($refundType == 'Partial' && is_null($amount)){
+            throw new Easy_paypal_Exception('If refund type is partial amount must be specified');
+        }
+        if($refundType == 'Partial' && is_null($currencyCode)){
+            throw new Easy_paypal_Exception('If refund type is partial currency code must be specified');
+        }
+        //Set params to Partial refund type
+        if($refundType == 'Partial'){
+            $this->params['AMT'] = $amount;
+            $this->params['CURRENCYCODE'] = $currencyCode;
+        }
+        //Set optional params
+        if(!is_null($note)){
+            $this->params['NOTE'] = $note;
+        }
+        if(!is_null($payerId)){
+            $this->params['PAYERID'] = $payerId;
+        }
+        if(!is_null($invoiceId)){
+            $this->params['INVOICEID'] = $invoiceId;
+        }
+        //Exec
+        return $this->exec();
+    }
+
     function sanitizeTransactions($response)
     {
         $arrayTransactions = array();
