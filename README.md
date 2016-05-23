@@ -76,9 +76,44 @@ O exemplo de express checkout passo a passo pode ser encontrado em examples/chec
 
 ##### Criar perfil de recorrência
 
+Para criar um perfil de recorrência, um objeto Recurring é usado, este objeto é criado com os seguintes paramentros:
+
+* $profileStartDate = Data de início do perfil, valor padrão: data atual + 1 hora
+* $billingPeriod = Periodicidade, aceita os valores: Day, Week, Month, Year, valor padrão: Month
+* $billingFrequency = Número de períodos que formam 1 ciclo de pagamento, valor padrão: 1
+* $amount = O valor que será cobrado em cada ciclo de pagamento. Parâmetro obrogatório.
+
+Parâmetros opcionais:
+
+* $totalBillingCycles = Número total de ciclos de pagamento antes do perfil de recorrência ser encerrado, se não for informado o perfil existirá por tempo indeterminado.
+* $maxFailedPayments = Número máximo de pagamentos que podem falhar, antes do perfil ser cancelado automaticamente
+* $autobillAmt = Valor a pagar no proximo ciclo se o pagamento atual falhar, o PayPal será instruído a cobrar automaticamente o “montante a pagar” no próximo ciclo. Sempre que um pagamento recorrente, ou o pagamento inicial, falha, o valor que deveria ser cobrado é adicionado em um montante a pagar.
+
+Exemplo de caso de uso:
+
+Cliente compra a assinatura mensal de uma revista, com valor de R$ 10.00 e com validade de 1 ano. A cobrança acontecerá a cada 3 meses:
+
+* $billingPeriod = Month
+* $billingFrequency = 3
+* $amount = 10.00
+* $totalBillingCycles = 4
+
+Isso criará um perfil de pagamento mensal, onde a cada três meses, o cliente pagará o equivalente a R$ 30,00 pela assinatura pela assinatura mensal, que terá duração de 1 ano.
+
 ```php
 $request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
-$nvp = new \easyPaypal\Recurring('expressCheckout', 100, 'Recurring payment test');
+
+//Criando objeto Recurring usando parâmetros default
+$method = 'expressCheckout';
+$amount = 100;
+$description = 'Recurring payment test';
+$nvp = new \easyPaypal\Recurring($method, $amount, $description);
+
+//Alterando parâmetro do objeto Recurring
+$nvp->setTotalBillingCycles(12);
+$nvp->setBillingPeriod('Week');
+$nvp->setBillingFrequency(4);
+
 $nvp->setRequest($request);
 //Create sellers
 $seller = new \easyPaypal\Seller('SALE', null, 'BRL');
