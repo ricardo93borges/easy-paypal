@@ -30,6 +30,8 @@ Parametros opcionais:
 * $countryCode = País, padrão: 'BR'
 
 ```php
+include "autoload.php";
+
 $sandbox = true;
 $username = "conta-business_api1.test.com";
 $password = "123456";
