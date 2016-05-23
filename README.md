@@ -28,6 +28,7 @@ Parametros opcionais:
 * $version = versão da API, padrão: '73.0';
 * $currencyCode = Moeda, padrão: 'BRL'
 * $countryCode = País, padrão: 'BR'
+* $notifyUrl = URL para onde será enviado as notificações referentes a transação realizada com este objeto Request
 
 ```php
 include "autoload.php";
@@ -49,6 +50,8 @@ $request->setLocalecode('pt_BR');
 ##### Express checkout
 
 Express Checkout é uma solução de pagamento do PayPal indicada para sites e lojas online que tenham integrações de médio e grande porte.
+
+O limite de pagamentos/seller é 10 por requisição.
 
 ```php
 include "autoload.php";
@@ -91,6 +94,16 @@ Parâmetros opcionais:
 * $maxFailedPayments = Número máximo de pagamentos que podem falhar, antes do perfil ser cancelado automaticamente
 * $autobillAmt = Valor a pagar no proximo ciclo se o pagamento atual falhar, o PayPal será instruído a cobrar automaticamente o “montante a pagar” no próximo ciclo. Sempre que um pagamento recorrente, ou o pagamento inicial, falha, o valor que deveria ser cobrado é adicionado em um montante a pagar.
 
+<b>Pagamento inicial não recorrente</b>
+
+Além da definição do perfil de pagamento recorrente e do período de experiência, podemos definir um pagamento que deverá ser efetuado no momento da criação do perfil. Para isso deve ser definido os seguintes parametros:
+
+* $initAmt = Valor inicial que deverá ser cobrado.
+* $failedInitAmtAction = A ação que deverá ser tomada, caso o pagamento inicial falhe, valores aceitos <b>ContinueOnFailure</b> ou <b>CancelOnFailure</b>
+
+* ContinueOnFailure – Caso o pagamento falhe, o perfil de pagamento recorrente será criado e o valor inicial será colocado no montante a pagar do perfil.
+* CancelOnFailure – Caso o pagamento inicial falhe, o perfil de pagamento recorrente não será criado.
+
 Exemplo de caso de uso:
 
 Cliente compra a assinatura mensal de uma revista, com valor de R$ 10.00 e com validade de 1 ano. A cobrança acontecerá a cada 3 meses:
@@ -101,6 +114,8 @@ Cliente compra a assinatura mensal de uma revista, com valor de R$ 10.00 e com v
 * $totalBillingCycles = 4
 
 Isso criará um perfil de pagamento mensal, onde a cada três meses, o cliente pagará o equivalente a R$ 30,00 pela assinatura pela assinatura mensal, que terá duração de 1 ano.
+
+O limite de pagamentos/seller é 10 por requisição.
 
 ```php
 $request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
