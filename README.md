@@ -125,7 +125,14 @@ $nvp->setParams($seller);
 $response = $nvp->send($seller);
 ```
 
-##### Perfil de recorrência com periodo de teste
+##### Perfil de recorrência com periodo de experiência
+
+Para este tipo de perfil é necessário especificar mais 4 parâmetro:
+
+* $trialBillingPeriod = Periodicidade do periodo de experiência, valores aceitos: Day, Week, Month, Year.
+* $trialBillingFrequency = Número de períodos que formam 1 ciclo.
+* $trialAmt = Valor que será cobrado durante o período de experiência.
+* $trialTotalBillingCycles = Número total de ciclos que terá o período de experiência. Ao contrário da criação do perfil regular, este parâmetro é obrigatório.
 
 ```php
 $request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
@@ -148,6 +155,18 @@ $response = $nvp->send($seller);
 
 ##### Reembolso
 
+O reembolso total ou parcial pode ser realizado apenas para transações criadas a menos de 60 dias. O reembolso é realizado utilizando o método refundTransaction da classe Transaction, este método aceita os seguintes parâmetros:
+
+* $transactionId = ID da transação, parâmetro obrigatório.
+* $refundType = Tipo de reembolso, parâmetro obrigatório, valores aceitos: Full ou Partial
+* $amount = Valor a ser reembolsado, obrigatório para reembolsos parciais (Partial).
+* $currencyCode = Moeda utilizada no reembolso, obrigatório para reembolsos parciais (Partial). Ex.: BRL
+* $note = Razão para o reembolso, opcional.
+* $payerId = ID do comprador, opcional.
+* $invoiceId = Identificador interno da compra (Referência), opcional.
+
+No exemplo abaixo é buscado todas as transações realizadas nos últimos 30 dias, e então realizado um reembolso total em uma e um reembolso parcial em outra.
+
 ```php
 $request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
 //Create Transaction Object
@@ -161,10 +180,10 @@ $transaction->setEndDate($endtDate);
 //Set request
 $transaction->setRequest($request);
 
-//Search transactions
+//Search transactions by start and end dates
 $transactions = $transaction->transactionSearch();
 
-//Get transaction details
+//Get transaction details by ID
 $details = $transaction->getTransactionDetails($transactions[0]->getTxnId());
 //Full Refund
 $response = $transaction->refundTransaction($details->getTxnId(), 'Full');
