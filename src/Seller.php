@@ -1,6 +1,14 @@
 <?php
 namespace easyPaypal;
 
+/**
+ * TODO review __construct e $paymentAction
+ */
+
+/**
+ * Class Seller
+ * @package easyPaypal
+ */
 class Seller
 {
     private $paymentAction;

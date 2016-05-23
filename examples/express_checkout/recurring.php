@@ -12,6 +12,8 @@ $logoUrl = '';
 //Create Recurring
 $request = new \easyPaypal\Request(true, $creed['username'], $creed['password'], $creed['signature'], $returnUrl, $cancelUrl, $logoUrl);
 $nvp = new \easyPaypal\Recurring('expressCheckout', 100, 'Recurring payment test');
+//non-recurring initial payment.
+//$nvp->setInitAmt(10);
 $nvp->setRequest($request);
 //Create sellers
 $seller = new \easyPaypal\Seller('SALE', null, 'BRL');

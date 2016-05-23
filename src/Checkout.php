@@ -1,6 +1,10 @@
 <?php
 namespace easyPaypal;
 
+/**
+ * Class Checkout
+ * @package easyPaypal
+ */
 class Checkout{
 
     private $method;
@@ -156,10 +160,10 @@ class Checkout{
             $sellers = array($sellers);
         }
 
-        /*
-        if($this->getNotifyUrl()){
-            $this->params['NOTIFYURL'] = $this->getNotifyUrl();
-        }*/
+        //Validate seller limit
+        if(count($sellers) > 10){
+            throw new Easy_paypal_Exception('The maximum amount of payments/sellers is 10. '.count($sellers).' Informed.');
+        }
 
         $countSeller = 0;
         $countItem = 0;
@@ -175,6 +179,9 @@ class Checkout{
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
+                if($item->getCategory()) {
+                    $this->params['L_PAYMENTREQUEST_' . $countSeller . '_ITEMCATEGORY' . $countItem] = $item->getCategory();
+                }
                 $countItem++;
             }
             $countSeller++;

@@ -39,7 +39,7 @@ echo "<br/><br/>";
 echo "Partial Refund test <br/><br/>";
 //Get transaction details
 $details = $transaction->getTransactionDetails($transactions[1]->getTxnId());
-//Full Refund transaction
+//Partial Refund transaction
 $response = $transaction->refundTransaction($details->getTxnId(), 'Partial', 1, $details->getCurrencyCode(), "Partial Refund test", $details->getCustomer()->getPaypalId());
 if(isset($response['ACK']) && $response['ACK'] == "Success"){
     echo "Success on Full Refund transaction. REFUNDTRANSACTIONID: ".$response['REFUNDTRANSACTIONID']."<br/><br/>";

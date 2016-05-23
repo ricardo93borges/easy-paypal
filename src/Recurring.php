@@ -27,6 +27,15 @@ class Recurring extends Request
     private $trialTotalBillingCycles;
     private $request;
     private $params;
+    private $initAmt;
+    private $failedInitAmtAction;
+
+    /**
+     * TODO
+     *
+     * 1-Pagamento inicial não recorrente.
+     *
+     */
 
     /**
      * Recurring constructor.
@@ -315,6 +324,41 @@ class Recurring extends Request
         $this->token = $token;
     }
 
+    /**
+     * @return int
+     */
+    public function getInitAmt()
+    {
+        return $this->initAmt;
+    }
+
+    /**
+     * @param int $initAmt
+     */
+    public function setInitAmt($initAmt)
+    {
+        $this->initAmt = $initAmt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailedInitAmtAction()
+    {
+        return $this->failedInitAmtAction;
+    }
+
+    /**
+     * @param string $failedInitAmtAction
+     */
+    public function setFailedInitAmtAction($failedInitAmtAction)
+    {
+        if(!in_array($failedInitAmtAction, array('ContinueOnFailure', 'CancelOnFailure'))){
+            throw new Easy_paypal_Exception('failedInitAmtAction must be ContinueOnFailure or CancelOnFailure');
+        }
+        $this->failedInitAmtAction = $failedInitAmtAction;
+    }
+
     function exec(){
         $this->request->setParams($this->params);
         //die(print_r($this->request->getParams()));
@@ -434,10 +478,17 @@ class Recurring extends Request
         if(!is_array($sellers)){
             $sellers = array($sellers);
         }
-        /*
-        if($this->getNotifyUrl()){
-            $this->request['NOTIFYURL'] = $this->getNotifyUrl();
-        }*/
+
+        if(count($sellers) > 10){
+            throw new Easy_paypal_Exception('The maximum amount of payments/sellers is 10. '.count($sellers).' Informed.');
+        }
+
+        //non-recurring initial payment.
+        if($this->getInitAmt()){
+            $this->failedInitAmtAction = $this->getFailedInitAmtAction() ? $this->getFailedInitAmtAction() : 'ContinueOnFailure';
+            $this->params['INITAMT'] = $this->getInitAmt();
+            $this->params['FAILEDINITAMTACTION'] = $this->getFailedInitAmtAction();
+        }
 
         $countSeller = 0;
         $countItem = 0;
@@ -455,6 +506,9 @@ class Recurring extends Request
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_QTY'.$countItem] = $item->getQuantity();
                 $this->params['L_BILLINGTYPE'.$countItem] = 'RecurringPayments';
                 $this->params['L_BILLINGAGREEMENTDESCRIPTION'.$countItem] = $this->getDescription();
+                if($item->getCategory()) {
+                    $this->params['L_PAYMENTREQUEST_' . $countSeller . '_ITEMCATEGORY' . $countItem] = $item->getCategory();
+                }
                 $countItem++;
             }
             $countSeller++;

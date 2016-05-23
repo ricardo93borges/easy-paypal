@@ -32,10 +32,11 @@ $nvp->setRequest($request);
 $seller = new \easyPaypal\Seller('SALE', $ref);
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1);
+$item1->setCategory('Digital');
 $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);
 $seller->addItem($item1);
 $seller->addItem($item2);
 //Set request
 $nvp->setParams($seller);
-$response = $nvp->send($seller);
+$response = $nvp->send();
 var_dump($response);

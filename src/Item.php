@@ -9,6 +9,7 @@ class Item
     private $quantity;
     private $billingType;
     private $billingAgreementDescription;
+    private $category;
 
     /**
      * Item constructor.
@@ -121,6 +122,26 @@ class Item
     public function setBillingAgreementDescription($billingAgreementDescription)
     {
         $this->billingAgreementDescription = $billingAgreementDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     * Allowed only Physical or Digital
+     */
+    public function setCategory($category)
+    {
+        if(!in_array($category, array('Digital', 'Physical'))){
+            throw new Easy_paypal_Exception('Item category must be Digital or Physical');
+        }
+        $this->category = $category;
     }
 
 }

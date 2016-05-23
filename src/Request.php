@@ -26,6 +26,7 @@ class Request
     private $paypalUrl;
     private $params;
     private $headerImage;
+    private $notifyUrl;
 
     /**
      * Request constructor.
@@ -43,7 +44,7 @@ class Request
      * @param string $currencyCode
      * @param string $countryCode
      */
-    public function __construct($sandbox, $user, $password, $signature, $returnUrl='', $cancelUrl='', $headerImage='', $params=array(), $buttonSource='', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR')
+    public function __construct($sandbox, $user, $password, $signature, $returnUrl='', $cancelUrl='', $headerImage='', $params=array(), $buttonSource='', $notifyUrl='', $localecode='pt_BR', $version='73.0', $currencyCode='BRL', $countryCode='BR')
     {
         $this->sandbox = $sandbox;
         $this->user = $user;
@@ -53,6 +54,7 @@ class Request
         $this->returnUrl = $returnUrl;
         $this->cancelUrl = $cancelUrl;
         $this->buttonSource = $buttonSource;
+        $this->notifyUrl = $notifyUrl;
         $this->version = $version;
         $this->currencyCode = $currencyCode;
         $this->countryCode = $countryCode;
@@ -84,7 +86,8 @@ class Request
             'VERSION' => $this->getVersion(),
             'RETURNURL' => $this->getReturnUrl(),
             'CANCELURL' => $this->getCancelUrl(),
-            'BUTTONSOURCE' => $this->getButtonSource()
+            'BUTTONSOURCE' => $this->getButtonSource(),
+            'NOTIFYURL' => $this->getNotifyUrl(),
         );
         $this->params = array_merge($this->params, $params);
     }
@@ -310,6 +313,22 @@ class Request
     public function setHeaderImage($headerImage)
     {
         $this->headerImage = $headerImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotifyUrl()
+    {
+        return $this->notifyUrl;
+    }
+
+    /**
+     * @param mixed $notifyUrl
+     */
+    public function setNotifyUrl($notifyUrl)
+    {
+        $this->notifyUrl = $notifyUrl;
     }
 
     public function exec(){
