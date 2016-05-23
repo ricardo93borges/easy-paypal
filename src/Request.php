@@ -61,7 +61,7 @@ class Request
         $this->paypalUrl = 'https://www.paypal.com/br/cgi-bin/webscr';
         $this->setParams($params);
     }
-    
+
     /**
      * @return mixed
      */
@@ -313,7 +313,6 @@ class Request
     }
 
     public function exec(){
-        //die(print_r($this->params));
         $apiEndpoint  = 'https://api-3t.' . ($this->isSandbox() ? 'sandbox.': null);
         $apiEndpoint .= 'paypal.com/nvp';
 
@@ -340,5 +339,4 @@ class Request
         }
         return $responseNvp;
     }
-
 }

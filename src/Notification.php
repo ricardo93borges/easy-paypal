@@ -26,17 +26,9 @@ class Notification
      * @param $custom
      * @param $invoice
      */
-    public function __construct($id, $txnId, $txnType, $receiverEmail, $paymentStatus, $pendingReason, $reasonCode, $custom, $invoice)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->txnId = $txnId;
-        $this->txnType = $txnType;
-        $this->receiverEmail = $receiverEmail;
-        $this->paymentStatus = $paymentStatus;
-        $this->pendingReason = $pendingReason;
-        $this->reasonCode = $reasonCode;
-        $this->custom = $custom;
-        $this->invoice = $invoice;
+
     }
 
     /**

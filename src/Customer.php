@@ -21,38 +21,9 @@ class Customer{
 
     /**
      * Customer constructor.
-     * @param $id
-     * @param $addressCountry
-     * @param $addressCity
-     * @param $addressCountryCode
-     * @param $addressName
-     * @param $addressState
-     * @param $addressStatus
-     * @param $addressStreet
-     * @param $addressZip
-     * @param $contactPhone
-     * @param $firstName
-     * @param $lastName
-     * @param $businessName
-     * @param $email
-     * @param $paypalId
      */
-    public function __construct($id, $addressCountry, $addressCity, $addressCountryCode, $addressName, $addressState, $addressStatus, $addressStreet, $addressZip, $contactPhone, $firstName, $lastName, $businessName, $email, $paypalId){
-        $this->id = $id;
-        $this->addressCountry = $addressCountry;
-        $this->addressCity = $addressCity;
-        $this->addressCountryCode = $addressCountryCode;
-        $this->addressName = $addressName;
-        $this->addressState = $addressState;
-        $this->addressStatus = $addressStatus;
-        $this->addressStreet = $addressStreet;
-        $this->addressZip = $addressZip;
-        $this->contactPhone = $contactPhone;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->businessName = $businessName;
-        $this->email = $email;
-        $this->paypalId = $paypalId;
+    public function __construct(){
+
     }
 
     /**

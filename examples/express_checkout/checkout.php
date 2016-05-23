@@ -13,6 +13,7 @@ include "credentials.php";
  * Defina a referencia ao criar um objeto Seller senão será usado uma String aleatória
  *
  */
+//Referencia
 $ref=null;
 
 //App url

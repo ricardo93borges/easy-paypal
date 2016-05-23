@@ -104,51 +104,48 @@ class Ipn{
         //$this->ipnLog("....");
         //$this->ipnLog(json_encode($arr));
 
-        $notification = new Notification(
-            null,
-            $arr['txn_id'],
-            $arr['txn_type'],
-            $arr['receiver_email'],
-            $arr['payment_status'],
-            $arr['pending_reason'],
-            $arr['reason_code'],
-            $arr['custom'],
-            $arr['invoice']);
+        $notification = new Notification();
+        $notification->setTxnId($arr['txn_id']);
+        $notification->setTxnType($arr['txn_type']);
+        $notification->setReceiverEmail($arr['receiver_email']);
+        $notification->setPaymentStatus($arr['payment_status']);
+        $notification->setPendingReason($arr['pending_reason']);
+        $notification->setReasonCode($arr['reason_code']);
+        $notification->setCustom($arr['custom']);
+        $notification->setInvoice($arr['invoice']);
 
-        $customer = new Customer(
-            null,
-            $arr['address_country'],
-            $arr['address_city'],
-            $arr['address_country_code'],
-            $arr['address_name'],
-            $arr['address_state'],
-            $arr['address_status'],
-            $arr['address_street'],
-            $arr['address_zip'],
-            $arr['contact_phone'],
-            $arr['first_name'],
-            $arr['last_name'],
-            $arr['business_name'],
-            $arr['payer_email'],
-            $arr['payer_id']);
+        $customer = new Customer();
+        $customer->setAddressCountry($arr['address_country']);
+        $customer->setAddressCity($arr['address_city']);
+        $customer->setAddressCountryCode($arr['address_country_code']);
+        $customer->setAddressName($arr['address_name']);
+        $customer->setAddressState($arr['address_state']);
+        $customer->setAddressStatus($arr['address_status']);
+        $customer->setAddressStreet($arr['address_street']);
+        $customer->setAddressZip($arr['address_zip']);
+        $customer->setContactPhone($arr['contact_phone']);
+        $customer->setFirstName($arr['first_name']);
+        $customer->setLastName($arr['last_name']);
+        $customer->setBusinessName($arr['business_name']);
+        $customer->setEmail($arr['payer_email']);
+        $customer->setPaypalId($arr['payer_id']);
 
-        $transaction = new Transaction(
-            null,
-            $arr['txn_id'],
-            $arr['txn_type'],
-            $arr['payment_status'],
-            $arr['pending_reason'],
-            $arr['reason_code'],
-            $arr['custom'],
-            $arr['invoice'],
-            $arr['payer_id'],
-            $arr['mc_currency'],
-            $arr['mc_gross'],
-            $arr['mc_fee'],
-            $arr['mc_handling'],
-            $arr['mc_shipping'],
-            $arr['tax']
-        );
+        $transaction = new Transaction();
+        $transaction->setId(null);
+        $transaction->setTxnId($arr['txn_id']);
+        $transaction->setTxnType($arr['txn_type']);
+        $transaction->setPaymentStatus($arr['payment_status']);
+        $transaction->setPendingReason($arr['pending_reason']);
+        $transaction->setReasonCode($arr['reason_code']);
+        $transaction->setCustom($arr['custom']);
+        $transaction->setInvoice($arr['invoice']);
+        $transaction->setPayerId($arr['payer_id']);
+        $transaction->setCurrency($arr['mc_currency']);
+        $transaction->setGross($arr['mc_gross']);
+        $transaction->setFee($arr['mc_fee']);
+        $transaction->setHandling($arr['mc_handling']);
+        $transaction->setShipping($arr['mc_shipping']);
+        $transaction->setTax($arr['tax']);
         
         return array('notification'=>$notification, 'customer'=>$customer, 'transaction'=>$transaction);
     }

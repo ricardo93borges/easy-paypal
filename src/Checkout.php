@@ -66,6 +66,11 @@ class Checkout{
         $this->payerId = $payerId;
     }
 
+    function exec(){
+        $this->request->setParams($this->params);
+        return $this->request->exec();
+    }
+
     function setExpressCheckout(){
         $this->params['METHOD'] = 'setExpressCheckout';
         $response = $this->exec();
