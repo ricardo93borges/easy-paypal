@@ -21,18 +21,18 @@ $transaction->setEndDate($endtDate);
 //Set request
 $transaction->setRequest($request);
 //Search transaction
-$response = $transaction->transactionSearch();
+$transactions = $transaction->transactionSearch();
 
-foreach($response as $t){
-    echo $t->getCustomer()->getFirstName()."<br/>";
-    echo $t->getCustomer()->getLastName()."<br/>";
-    echo $t->getCustomer()->getEmail()."<br/>";
-    echo $t->getPaymentDate()."<br/>";
-    echo $t->getTxnId()."<br/>";
-    echo $t->getPaymentStatus()."<br/>";
-    echo $t->getTxnType()."<br/>";
-    echo $t->getGross()."<br/>";
-    echo $t->getCurrencyCode()."<br/>";
-    echo $t->getFee()."<br/>";
-    echo "<br/><br/>";
-}
+//Get transaction details
+$details = $transaction->getTransactionDetails($transactions[0]->getTxnId());
+
+echo $details->getCustomer()->getFirstName()."<br/>";
+echo $details->getCustomer()->getLastName()."<br/>";
+echo $details->getCustomer()->getEmail()."<br/>";
+echo $details->getPaymentDate()."<br/>";
+echo $details->getTxnId()."<br/>";
+echo $details->getTxnType()."<br/>";
+echo $details->getPaymentStatus()."<br/>";
+echo $details->getGross()."<br/>";
+echo $details->getCurrencyCode()."<br/>";
+echo $details->getFee()."<br/>";

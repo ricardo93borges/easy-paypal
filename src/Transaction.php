@@ -24,8 +24,9 @@ class Transaction extends Request
     private $startDate;
     private $endDate;
     private $paymentDate;
-    private $type;
     private $customer;
+    private $subject;
+    private $receiver;
 
     /**
      * Transaction constructor.
@@ -324,9 +325,21 @@ class Transaction extends Request
         $this->params['ENDDATE'] = $this->getEndDate();
         $response = $this->exec();
         if(count($response) == 0){
-            throw new Easy_paypal_Exception('No transaction found.');
+            throw new Easy_paypal_Exception('Transactions not found.');
         }else{
             return $this->sanitizeTransactions($response);
+        }
+    }
+
+    function getTransactionDetails($transactionId){
+        $this->params['METHOD'] = 'GetTransactionDetails';
+        $this->params['TRANSACTIONID'] = $transactionId;
+
+        $response = $this->exec();
+        if(count($response) == 0){
+            throw new Easy_paypal_Exception('No transaction found.');
+        }else{
+            return $this->sanitizeTransaction($response);
         }
     }
 
@@ -367,7 +380,7 @@ class Transaction extends Request
             $t->setPaymentDate($timestamp);
             $t->setTxnId($transactionId);
             $t->setPaymentStatus($status);
-            $t->setType($type);
+            $t->setTxnType($type);
             $t->setGross($amt);
             $t->setCurrencyCode($currencyCode);
             $t->setFee($feeAmt);
@@ -377,6 +390,45 @@ class Transaction extends Request
         }
 
         return $transactions;
+    }
+
+    function sanitizeTransaction($response){
+        $receiver = new Receiver();
+        $receiver->setId($response['RECEIVERID']);
+        $receiver->setEmail($response['RECEIVEREMAIL']);
+        $receiver->setBusiness($response['RECEIVERBUSINESS']);
+
+        $customer = new Customer();
+        $customer->setFirstName($response['FIRSTNAME']);
+        $customer->setLastName($response['LASTNAME']);
+        $customer->setEmail($response['EMAIL']);
+        $customer->setPaypalId($response['PAYERID']);
+        $customer->setStatus($response['PAYERSTATUS']);
+        $customer->setAddressCountryCode($response['COUNTRYCODE']);
+        $customer->setAddressCountry($response['SHIPTOCOUNTRYNAME']);
+        $customer->setAddressStreet($response['SHIPTOSTREET']);
+        $customer->setAddressCity($response['SHIPTOCITY']);
+        $customer->setAddressState($response['SHIPTOSTATE']);
+        $customer->setAddressZip($response['SHIPTOZIP']);
+        $customer->setAddressStatus($response['ADDRESSSTATUS']);
+
+        $transaction = new Transaction();
+        $transaction->setSubject($response['SUBJECT']);
+        $transaction->setTxnId($response['TRANSACTIONID']);
+        $transaction->setTxnType($response['PAYMENTTYPE']);
+        $transaction->setPaymentDate($response['ORDERTIME']);
+        $transaction->setGross($response['AMT']);
+        $transaction->setFee($response['FEEAMT']);
+        $transaction->setCurrencyCode($response['CURRENCYCODE']);
+        $transaction->setPaymentStatus($response['PAYMENTSTATUS']);
+        $transaction->setPendingReason($response['PENDINGREASON']);
+        $transaction->setReasonCode($response['REASONCODE']);
+        $transaction->setReasonCode($response['REASONCODE']);
+        $transaction->setReceiver($receiver);
+        $transaction->setCustomer($customer);
+
+        return $transaction;
+
     }
 
     function extractNumbers($str){
@@ -444,22 +496,6 @@ class Transaction extends Request
     }
 
     /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * @return Customer object
      */
     public function getCustomer()
@@ -475,5 +511,35 @@ class Transaction extends Request
         $this->customer = $customer;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
 
+    /**
+     * @param mixed $subject
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+    }
+
+    /**
+     * @return Receiver objetc
+     */
+    public function getReceiver()
+    {
+        return $this->receiver;
+    }
+
+    /**
+     * @param Receiver $receiver
+     */
+    public function setReceiver($receiver)
+    {
+        $this->receiver = $receiver;
+    }
 }

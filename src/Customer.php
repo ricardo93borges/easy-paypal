@@ -18,6 +18,7 @@ class Customer{
     private $businessName;
     private $email;
     private $paypalId;
+    private $status;
 
     /**
      * Customer constructor.
@@ -264,6 +265,22 @@ class Customer{
     public function setPaypalId($paypalId)
     {
         $this->paypalId = $paypalId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
 }
