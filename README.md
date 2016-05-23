@@ -1,4 +1,8 @@
-Code sample
-===========
+###Easy Paypal
 
-[Guia de integração com Express Checkout](https://www.paypal-brasil.com.br/x/tutoriais/guia-rapido-de-integracao-com-express-checkout/)
+Easy paypal é um SDK para facilitar a integração do Paypal NVP API e Paypal IPN com sua aplicação.
+
+####Pré-Requisitos
+*PHP >= 5.3
+*Curl extension 
+*Composer
