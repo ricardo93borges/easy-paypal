@@ -9,20 +9,56 @@ Easy paypal é um SDK para facilitar a integração do Paypal NVP API e Paypal I
 
 #### Exemplos
 
-##### Express checkout
+##### Criando objeto Request
+
+As requisições a API são feitas por um objeto Request, este objeto deve ser criado com os seguintes parametros obrigatorios:
+
+* $sandbox; boolean, se true usará o endpoint https://www.sandbox.paypal.com/br/cgi-bin/webscr senão https://www.paypal.com/br/cgi-bin/webscr
+* Credenciais:
+** $user; 
+** $password; 
+** $signature; 
+* $returnUrl; URL de retorno após o comprador confirmar a compra
+
+Parametros opcionais:
+
+$cancelUrl; URL de retorno após o comprador cancelar a compra
+$headerImage; Imagem para apacer na página de confirmação, aqui pode-se usar o logotipo da sua loja.
+$buttonSource; 
+$localecode; Idioma, padrão: 'pt_BR';
+$version; versão da API, padrão: '73.0';
+$currencyCode; Moeda, padrão: 'BRL'
+$countryCode; País, padrão: 'BR'
+
 
 ```php
-
-include "autoload.php";
-
-//Referencia / Invoice ID: Campo para o acompanhamento e controle interno do comerciante
-$ref=null;
+$sandbox = true;
+$username = "conta-business_api1.test.com";
+$password = "123456";
+$signature = "AiPC9BjkCyDFQXbSkoZcgqH3hpacA-p.YLGfQjc0EobtODs.fMJNajCx";
 
 $appUrl = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 $returnUrl = $appUrl;
 $cancelUrl = $appUrl;
 
-$request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
+$request = new \easyPaypal\Request($sandbox, $username, $password, $signature, $returnUrl, $cancelUrl);
+$request->setHeaderImage('path/to/my/image');
+$request->setLocalecode('pt_BR');
+```
+
+##### Express checkout
+
+Express Checkout é uma solução de pagamento do PayPal indicada para sites e lojas online que tenham integrações de médio e grande porte.
+
+```php
+
+include "autoload.php";
+
+
+//Referencia / Invoice ID: Campo para o acompanhamento e controle interno do comerciante
+$ref=null;
+
+$request = new \easyPaypal\Request($sandbox, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
 $nvp = new \easyPaypal\Checkout('expressCheckout');
 $nvp->setRequest($request);
 
