@@ -13,7 +13,7 @@ Easy paypal é um SDK para facilitar a integração do Paypal NVP API e Paypal I
 
 As requisições a API são feitas por um objeto Request, este objeto deve ser criado com os seguintes parametros obrigatorios:
 
-* $sandbox = boolean, se true usará o endpoint sandbox.paypal.com/br/cgi-bin/webscr senão paypal.com/br/cgi-bin/webscr
+* $sandbox = boolean, se true usará o endpoint <i>sandbox.paypal.com/br/cgi-bin/webscr</i> senão paypal.com/br/cgi-bin/webscr
 * $user; 
 * $password; 
 * $signature; 
