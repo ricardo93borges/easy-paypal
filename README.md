@@ -202,4 +202,39 @@ if(isset($response['ACK']) && $response['ACK'] == "Success"){
 }
 ```
 
+##### Integração com IPN
+
+Instant Payment Notification (IPN) é um serviço de mensagens que notifica sua aplicação sobre eventos relacionados às transações PayPal. Pode ser utilizado para automatizar seu back-office ou funções administrativas.
+
+Fluxo:
+
+* 1- O serviço no notificações da PayPal envia um HTTP POST para sua aplicação, contendo uma mensagem IPN;
+* 2- Seu manipulador de notificações retorna um status HTTP 200 sem conteúdo;
+* 3- Seu manipulador de notificações faz um HTTP POST, na mesma ordem, com os mesmos campos e codificação recebidos, de volta para a PayPal;
+* 4- PayPal retorna uma string simples, contendo apenas VERIFIED, caso a mensagem seja válida, ou INVALID, caso a mensagem seja inválida;
+
+A classe Ipn possui um handler (o manipulador descrito acima) que simplifica este fluxo.
+
+Configurar a URL de notificação:
+
+* Acesse sua conta de Paypal
+* Acesse Perfil > Mais opções
+* Acesse Preferências de Notificação
+* Informe a url do handler
+
+As ações tomadas quando se recebe uma notificação, são bastante específicas da aplicação. 
+
+Em examples/ipn/ há um exemplo de manipulador que armazena os dados das notificações recebidas em um banco de dados, no arquivo ipn.php é aguardado um HTTP POST que será enviado para o método <b>handleIpn()</b> da classe <b>Ipn</b>, neste método é realizado todos os passos do fluxo descrito acima se ocorrer algum erro o mesmo é retornado caso contrario é devolvido um array com os objetos <b>Notification, Customer e Transaction</b> que são armazenado no banco de dados.
+
+
+
+
+
+
+
+
+
+
+
+
 
