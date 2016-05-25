@@ -24,7 +24,7 @@ class Seller
      * @param null $reference
      * @param string $currencyCode
      */
-    public function __construct($paymentAction, $reference=null, $currencyCode='BRL'){
+    public function __construct($reference=null, $paymentAction='SALE', $currencyCode='BRL'){
         $this->paymentAction = $paymentAction;
         $this->reference = $reference;
         $this->currencyCode = $currencyCode;

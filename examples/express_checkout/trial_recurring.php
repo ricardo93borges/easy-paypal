@@ -18,7 +18,7 @@ $nvp->setTrialBillingFrequency(1);
 $nvp->setTrialBillingPeriod('Month');//(Month|Day|Week|Year)
 $nvp->setTrialTotalBillingCycles(1);
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', null, 'BRL');
+$seller = new \easyPaypal\Seller();
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1, 'RecurringPayments', 'Recurring payment item');
 $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1, 'RecurringPayments', 'Recurring payment item');

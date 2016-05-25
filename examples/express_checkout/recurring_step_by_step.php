@@ -14,7 +14,7 @@ $request = new \easyPaypal\Request(true, $creed['username'], $creed['password'],
 $nvp = new \easyPaypal\Recurring('setExpressCheckout', 100, 'Recurring payment test');
 $nvp->setRequest($request);
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', null, 'BRL');
+$seller = new \easyPaypal\Seller();
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1, 'RecurringPayments', 'Recurring payment item');
 $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1, 'RecurringPayments', 'Recurring payment item');

@@ -14,7 +14,7 @@ $request = new \easyPaypal\Request(true, $creed['username'], $creed['password'],
 $nvp = new \easyPaypal\Checkout();
 $nvp->setRequest($request);
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', null, 'BRL');
+$seller = new \easyPaypal\Seller();
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1);
 $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);

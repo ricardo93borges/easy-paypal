@@ -24,19 +24,23 @@ $logoUrl = '';
 
 //Create Checkout
 $request = new \easyPaypal\Request(true, $creed['username'], $creed['password'], $creed['signature'], $returnUrl, $cancelUrl, $logoUrl);
-$nvp = new \easyPaypal\Checkout('expressCheckout');
-$nvp->setRequest($request);
+$checkout = new \easyPaypal\Checkout('expressCheckout');
+$checkout->setRequest($request);
+
 //set notify url
-//$nvp->setNotifyUrl('url');
+//$checkout->setNotifyUrl('url');
+
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', $ref);
+$seller = new \easyPaypal\Seller();
+
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1);
 $item1->setCategory('Digital');
 $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);
 $seller->addItem($item1);
 $seller->addItem($item2);
-//Set request
-$nvp->setParams($seller);
-$response = $nvp->send();
+
+//Set params
+$checkout->setParams($seller);
+$response = $checkout->send();
 var_dump($response);
