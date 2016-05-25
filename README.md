@@ -51,9 +51,10 @@ $request->setLocalecode('pt_BR');
 
 Express Checkout é uma solução de pagamento do PayPal indicada para sites e lojas online que tenham integrações de médio e grande porte. Para realizar o express checkout crie um objeto Checkout e atribua um objeto Request a ele. Em cada requisição pode ser criada até 10 transações, isso é feito criando objetos Seller e atribuindo objetos Item a eles. Cada Seller irá gerar uma transação. Os objetos Seller são atribuídos ao Checkout pelo método setParams().
 
-Um Seller é criado usando os parâmetros:
+Um Seller é criado usando os seguintes parâmetros opcionais:
 
-* $reference = Número de pedido para controle do comerciante. Esse campo descreve o número do pedido do cliente dentro de sua própria loja. É seu identificador interno, que pode ser utilizado para a PayPal para ajudá-lo a identificar as transações durante as notificações. Se for passado null será gerado uma string aleatória.
+* $reference = Número de pedido para controle do comerciante. Esse campo descreve o número do pedido do cliente dentro de sua própria loja. É seu identificador interno, que pode ser utilizado para a PayPal para ajudá-lo a identificar as transações durante as notificações. Se for omitido ou passado null será gerado uma string aleatória.
+* $paymentAction = Especifíca a ação desta transação, o valor padrão é 'SALE'.
 
 O método setParams() deve ser chamado antes do método send() para que a requisição seja atualizada com os parâmetros adicionais se necessário.
 
@@ -70,7 +71,7 @@ $nvp = new \easyPaypal\Checkout();
 $nvp->setRequest($request);
 
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', $ref);
+$seller = new \easyPaypal\Seller();
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Item 1', 'Description', 40.00, 1);
 $item2 = new \easyPaypal\Item('Item 2', 'Description', 40.00, 1);
@@ -139,7 +140,7 @@ $nvp->setBillingFrequency(4);
 
 $nvp->setRequest($request);
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', null, 'BRL');
+$seller = new \easyPaypal\Seller();
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Item 1', 'Description', 40.00, 1, 'RecurringPayments', 'Recurring payment item');
 $seller->addItem($item1);
@@ -167,7 +168,7 @@ $nvp->setTrialBillingFrequency(1);
 $nvp->setTrialBillingPeriod('Month');//(Month|Day|Week|Year)
 $nvp->setTrialTotalBillingCycles(1);
 //Create sellers
-$seller = new \easyPaypal\Seller('SALE', null, 'BRL');
+$seller = new \easyPaypal\Seller();
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Item 1', 'Description', 40.00, 1, 'RecurringPayments', 'Recurring payment item');
 $seller->addItem($item1);
