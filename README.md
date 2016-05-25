@@ -54,7 +54,7 @@ Express Checkout é uma solução de pagamento do PayPal indicada para sites e l
 Um Seller é criado usando os seguintes parâmetros opcionais:
 
 * $reference = Número de pedido para controle do comerciante. Esse campo descreve o número do pedido do cliente dentro de sua própria loja. É seu identificador interno, que pode ser utilizado para a PayPal para ajudá-lo a identificar as transações durante as notificações. Se for omitido ou passado null será gerado uma string aleatória.
-* $paymentAction = Especifíca a ação desta transação, o valor padrão é 'SALE'.
+* $paymentAction = Especifica a ação desta transação, o valor padrão é 'SALE'.
 
 O método setParams() deve ser chamado antes do método send() para que a requisição seja atualizada com os parâmetros adicionais se necessário.
 
