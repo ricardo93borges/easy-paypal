@@ -68,7 +68,7 @@ include "autoload.php";
 $ref=null;
 
 $request = new \easyPaypal\Request($sandbox, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
-$nvp = new \easyPaypal\Checkout();
+$nvp = new \easyPaypal\Checkout('expressCheckout');
 $nvp->setRequest($request);
 
 //Create sellers
