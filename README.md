@@ -72,7 +72,7 @@ $nvp = new \easyPaypal\Checkout();
 $nvp->setRequest($request);
 
 //Create sellers
-$seller = new \easyPaypal\Seller();
+$seller = new \easyPaypal\Seller($ref);
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Item 1', 'Description', 40.00, 1);
 $item2 = new \easyPaypal\Item('Item 2', 'Description', 40.00, 1);
