@@ -32,13 +32,16 @@ $checkout->setRequest($request);
 
 //Create sellers
 $seller = new \easyPaypal\Seller();
+$seller2 = new \easyPaypal\Seller();
 
 //Add itens to sellers
 $item1 = new \easyPaypal\Item('Texugo', 'um texugo', 40.00, 1);
 $item1->setCategory('Digital');
 $item2 = new \easyPaypal\Item('Texugo 2', 'outro texugo', 40.00, 1);
 $seller->addItem($item1);
-$seller->addItem($item2);
+$seller2->addItem($item2);
+
+$sellers = array($seller, $seller2);
 
 //Set params
 $checkout->setParams($seller);

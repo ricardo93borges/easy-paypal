@@ -12,6 +12,7 @@ class Checkout{
     private $payerId;
     private $request;
     private $params;
+    //private $sellers;
 
     /**
      * Checkout constructor.
@@ -92,8 +93,15 @@ class Checkout{
         $this->params['METHOD'] = 'doExpressCheckoutPayment';
         $this->params['TOKEN'] = $this->getToken();
         $this->params['PAYERID'] = $this->getPayerId();
+        //$this->setSellerPaypalAccountId();
         $response = $this->exec();
         return $response;
+    }
+
+    function setSellerPaypalAccountId(){
+        for($i=0; $i<count($this->sellers); $i++){
+            $this->params['PAYMENTINFO_'.$i.'_SELLERPAYPALACCOUNTID'] = $this->getPayerId();
+        }
     }
 
     function expressCheckout(){
@@ -106,7 +114,7 @@ class Checkout{
                 $this->payerId = $response['PAYERID'];
                 //3-doExpressCheckoutPayment
                 $response = $this->doExpressCheckoutPayment();
-                return $response;
+                return $this->sanitizeResponse($response);
             } else{
                 return array('error'=>$response);
             }
@@ -125,6 +133,22 @@ class Checkout{
                 return array('error'=>$response);
             }
         }
+    }
+
+    public function sanitizeResponse($response){
+        $transactions = array();
+        foreach($response as $k=>$v){
+            $exp = explode('_', $k);
+            if(count($exp) < 2){
+                $transactions[$k] = $v;
+            }else{
+                if(!isset($exp[1])){
+                    $transactions[$exp[1]] = array();
+                }
+                $transactions[$exp[1]][$exp[2]] = $v;
+            }
+        }
+        return $transactions;
     }
 
     /**
@@ -165,9 +189,12 @@ class Checkout{
             throw new Easy_paypal_Exception('The maximum amount of payments/sellers is 10. '.count($sellers).' Informed.');
         }
 
+        $this->sellers = $sellers;
+
         $countSeller = 0;
         $countItem = 0;
         foreach($sellers as $seller){
+            //$this->params['PAYMENTINFO_'.$countSeller.'_SELLERPAYPALACCOUNTID'] = "";
             $this->params['PAYMENTREQUEST_'.$countSeller.'_PAYMENTACTION'] = $seller->getPaymentAction();
             $this->params['PAYMENTREQUEST_'.$countSeller.'_AMT'] = $seller->getAmount();
             $this->params['PAYMENTREQUEST_'.$countSeller.'_CURRENCYCODE'] = $seller->getCurrencyCode();
