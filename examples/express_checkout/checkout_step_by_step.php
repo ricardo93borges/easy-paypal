@@ -25,7 +25,6 @@ $nvp->setParams($seller);
 
 //If theres token do getExpressCheckoutDetails and doExpressCheckoutPayment
 if (isset($_GET['token'])) {
-
     //getExpressCheckoutDetails
     $nvp->setToken($_GET['token']);
     $nvp->setMethod('getExpressCheckoutDetails');
@@ -47,10 +46,8 @@ if (isset($_GET['token'])) {
     $response = $nvp->send();
 
     if (isset($response['ACK']) && $response['ACK'] == 'Success') {
-        $url =  $request->isSandbox() ? $request->getPaypalSandboxUrl() : $request->getPaypalUrl();
         $nvp->setToken($response['TOKEN']);
-        $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $nvp->getToken());
-        header('Location: ' . $url . '?' . http_build_query($query));
+        $nvp->transitionPage();
     } else {
         var_dump($response);
         die('error on setExpressCheckout');

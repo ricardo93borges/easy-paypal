@@ -122,17 +122,19 @@ class Checkout{
             //1-setExpressCheckout
             $response = $this->setExpressCheckout();
             if (isset($response['ACK']) && $response['ACK'] == 'Success') {
-                $url =  $this->request->isSandbox() ? $this->request->getPaypalSandboxUrl() : $this->request->getPaypalUrl();
                 $this->setToken($response['TOKEN']);
-                $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
-                //header('Location: ' . $url . '?' . http_build_query($query));
-                $redirectURL = sprintf('%s?%s', $url, http_build_query($query));
-                //carrega a página de redirecionamento
-	            require 'redirect.php';
+                $this->transitionPage();
             } else{
                 return array('error'=>$response);
             }
         }
+    }
+
+    public function transitionPage(){
+        $url =  $this->request->isSandbox() ? $this->request->getPaypalSandboxUrl() : $this->request->getPaypalUrl();
+        $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
+        $redirectURL = sprintf('%s?%s', $url, http_build_query($query));
+        require 'redirect.php';
     }
 
     public function sanitizeResponse($response){
