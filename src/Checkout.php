@@ -95,7 +95,7 @@ class Checkout{
         $this->params['PAYERID'] = $this->getPayerId();
         //$this->setSellerPaypalAccountId();
         $response = $this->exec();
-        return $response;
+        return $this->sanitizeResponse($response);
     }
 
     function setSellerPaypalAccountId(){
