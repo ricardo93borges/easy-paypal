@@ -8,7 +8,7 @@
 
 namespace easyPaypal;
 
-class Recurring extends Request
+class Recurring
 {
     private $billingPeriod;
     private $billingFrequency;
@@ -31,10 +31,7 @@ class Recurring extends Request
     private $failedInitAmtAction;
 
     /**
-     * TODO
-     *
-     * 1-Pagamento inicial não recorrente.
-     *
+     * TODO pagamento inicial não recorrente
      */
 
     /**
@@ -48,7 +45,7 @@ class Recurring extends Request
      * @param null $profileStartDate
      * @param int $autobillAmt
      */
-    public function __construct($method='setExpressCheckout', $amount, $description, $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null, $autobillAmt=0)
+    public function __construct($method='setExpressCheckout', $description, $billingPeriod='Month', $billingFrequency=1, $maxFailedPayments=3, $profileStartDate=null, $autobillAmt=0)
     {
         if(!$profileStartDate){
             $dt = new \DateTime();
@@ -63,7 +60,6 @@ class Recurring extends Request
         $this->maxFailedPayments = $maxFailedPayments;
         $this->profileStartDate = $profileStartDate;
         $this->description = $description;
-        $this->amount = $amount;
         $this->method = $method;
         $this->autobillAmt = $autobillAmt;
         $this->trialAmt = null;
@@ -373,12 +369,17 @@ class Recurring extends Request
         $this->params['PROFILESTARTDATE'] = $this->getProfileStartDate();
         $this->params['DESC'] = $this->getDescription();
         $this->params['AMT'] = $this->getAmount();
-        $this->params['CURRENCYCODE'] = $this->getCurrencyCode();
-        $this->params['COUNTRYCODE'] = $this->getCountryCode();
+        //$this->params['CURRENCYCODE'] = $this->getCurrencyCode();
+        //$this->params['COUNTRYCODE'] = $this->getCountryCode();
         $this->params['AUTOBILLAMT'] = $this->getAutobillAmt();
 
         if($this->getTotalBillingCycles()) {
             $this->params['TOTALBILLINGCYCLES'] = $this->getTotalBillingCycles();
+        }
+
+        if($this->getInitAmt() && $this->getFailedInitAmtAction()){
+            $this->params['INITAMT'] = $this->getInitAmt();
+            $this->params['FAILEDINITAMTACTION'] = $this->getFailedInitAmtAction();
         }
 
         if($this->trialTotalBillingCycles && $this->trialAmt && $this->trialBillingPeriod && $this->trialBillingFrequency){
@@ -500,6 +501,10 @@ class Recurring extends Request
             $this->params['PAYMENTREQUEST_'.$countSeller.'_INVNUM'] = $seller->getReference();
 
             foreach($seller->getItems() as $item){
+                //Update Recurring amount
+                $amt = $this->getAmount()+$item->getAmount();
+                $this->setAmount($amt);
+
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_NAME'.$countItem] = $item->getName();
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_DESC'.$countItem] = $item->getDescription();
                 $this->params['L_PAYMENTREQUEST_'.$countSeller.'_AMT'.$countItem] = $item->getAmount();
