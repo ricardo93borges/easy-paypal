@@ -382,17 +382,16 @@ class Recurring
             $this->params['FAILEDINITAMTACTION'] = $this->getFailedInitAmtAction();
         }
 
-        if($this->trialTotalBillingCycles && $this->trialAmt && $this->trialBillingPeriod && $this->trialBillingFrequency){
+        if(!is_null($this->trialTotalBillingCycles) && !is_null($this->trialAmt) && !is_null($this->trialBillingPeriod) && !is_null($this->trialBillingFrequency)){
             $this->params['TRIALBILLINGPERIOD'] = $this->getTrialBillingPeriod();
             $this->params['TRIALBILLINGFREQUENCY'] = $this->getTrialBillingPeriod();
             $this->params['TRIALAMT'] = $this->getTrialBillingPeriod();
             $this->params['TRIALTOTALBILLINGCYCLES'] = $this->getTrialBillingPeriod();
         }
 
-        //print "CreateRecurringPaymentsProfile";
-        //die(print_r($this->params));
         $response = $this->exec();
-        return $response;
+        $result = array_merge($this->params, $response);
+        return $this->sanitizeResponse($result);
     }
 
     function setExpressCheckout(){
@@ -426,7 +425,7 @@ class Recurring
                 $this->payerId = $response['PAYERID'];
                 //3-createRecurringPaymentsProfile
                 $response = $this->createRecurringPaymentsProfile();
-                return $response;
+                return $this->sanitizeResponse($response);
             } else{
                 return array('error'=>$response);
             }
@@ -434,17 +433,47 @@ class Recurring
             //1-setExpressCheckout
             $response = $this->setExpressCheckout();
             if (isset($response['ACK']) && $response['ACK'] == 'Success') {
-                $url =  $this->request->isSandbox() ? $this->request->getPaypalSandboxUrl() : $this->request->getPaypalUrl();
                 $this->setToken($response['TOKEN']);
-                $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
-                //header('Location: ' . $url . '?' . http_build_query($query));
-                $redirectURL = sprintf('%s?%s', $url, http_build_query($query));
-                //carrega a página de redirecionamento
-                require 'redirect.php';
+                $this->transitionPage();
             } else{
                 return array('error'=>$response);
             }
         }
+    }
+
+    public function transitionPage(){
+        $url =  $this->request->isSandbox() ? $this->request->getPaypalSandboxUrl() : $this->request->getPaypalUrl();
+        $query = array('cmd' => '_express-checkout', 'useraction' => 'commit', 'token' => $this->getToken());
+        $redirectURL = sprintf('%s?%s', $url, http_build_query($query));
+        require 'redirect.php';
+    }
+
+    public function sanitizeResponse($response){
+        $transactions = array('sellers'=>array(), 'request'=>array());
+        foreach($response as $k=>$v){
+            $exp = explode('_', $k);
+            if(count($exp) == 3) {
+                $transactions['sellers'][$exp[1]][$exp[2]] = $v;
+
+            }else if(count($exp) == 4) {
+                $item = substr($exp[3], -1);
+                $param = substr($exp[3], 0, -1);
+
+                if(!isset($transactions['sellers'][$exp[2]]['itens'])){
+                    $transactions['sellers'][$exp[2]]['itens'] = array();
+                }
+
+                if(!isset($transactions['sellers'][$exp[2]]['itens'][$item])){
+                    $transactions['sellers'][$exp[2]]['itens'][$item] = array();
+                }
+
+                $transactions['sellers'][$exp[2]]['itens'][$item][$param] = $v;
+
+            }else{
+                $transactions['request'][$k] = $v;
+            }
+        }
+        return $transactions;
     }
 
     /**
