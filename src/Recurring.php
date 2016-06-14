@@ -31,10 +31,6 @@ class Recurring
     private $failedInitAmtAction;
 
     /**
-     * TODO pagamento inicial não recorrente
-     */
-
-    /**
      * Recurring constructor.
      * @param $amount
      * @param $description
@@ -568,6 +564,20 @@ class Recurring
                 $response = $this->createRecurringPaymentsProfile();
         }
         return $response;
+    }
+
+    function getRecurringProfileDetails($profileId){
+        $this->params['METHOD'] = 'GetRecurringPaymentsProfileDetails';
+        $this->params['PROFILEID'] = $profileId;
+
+        $response = $this->exec();
+
+        if(count($response) == 0){
+            throw new Easy_paypal_Exception('No Profile found.');
+        }else{
+            //return $this->sanitizeTransaction($response);
+            return $response;
+        }
     }
 
 }
