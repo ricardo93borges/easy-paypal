@@ -94,7 +94,7 @@ Para criar um perfil de recorrência, um objeto Recurring é usado, este objeto 
 * $profileStartDate = Data de início do perfil, valor padrão: data atual + 1 hora
 * $billingPeriod = Periodicidade, aceita os valores: Day, Week, Month, Year, valor padrão: Month
 * $billingFrequency = Número de períodos que formam 1 ciclo de pagamento, valor padrão: 1
-* $amount = O valor que será cobrado em cada ciclo de pagamento. Parâmetro obrogatório.
+* $amount = O valor que será cobrado em cada ciclo de pagamento. Parâmetro obrigatório.
 
 Parâmetros opcionais:
 
@@ -249,6 +249,80 @@ As ações tomadas quando se recebe uma notificação, são bastante específica
 
 Em examples/ipn/ há um exemplo de manipulador que armazena os dados das notificações recebidas em um banco de dados, no arquivo ipn.php é aguardado um HTTP POST que será enviado para o método <b>handleIpn()</b> da classe <b>Ipn</b>, neste método é realizado todos os passos do fluxo descrito acima se ocorrer algum erro o mesmo é retornado caso contrario é devolvido um array com os objetos <b>Notification, Customer e Transaction</b> que são armazenado no banco de dados.
 
+##### Obter detalhes de um perfil recorrênte
+
+```php
+$request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
+$nvp = new \easyPaypal\Recurring();
+$nvp->setRequest($request);
+
+$response = $nvp->getRecurringProfileDetails($profileId);
+var_dump($response);
+```
+
+##### Obter transações
+
+```php
+$request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
+//Create Transaction Object
+$transaction = new \easyPaypal\Transaction();
+//Set start and end date
+$startDate = new \DateTime();
+$endtDate = new \DateTime();
+$startDate->sub(new DateInterval('P30D'));
+$transaction->setStartDate($startDate);
+$transaction->setEndDate($endtDate);
+//Set request
+$transaction->setRequest($request);
+//Search transaction
+$response = $transaction->transactionSearch();
+
+foreach($response as $t){
+    echo $t->getCustomer()->getFirstName()."<br/>";
+    echo $t->getCustomer()->getLastName()."<br/>";
+    echo $t->getCustomer()->getEmail()."<br/>";
+    echo $t->getPaymentDate()."<br/>";
+    echo $t->getTxnId()."<br/>";
+    echo $t->getPaymentStatus()."<br/>";
+    echo $t->getTxnType()."<br/>";
+    echo $t->getGross()."<br/>";
+    echo $t->getCurrencyCode()."<br/>";
+    echo $t->getFee()."<br/>";
+    echo "<br/><br/>";
+}
+```
+
+##### Obter detalhes de uma transação
+
+```php
+$request = new \easyPaypal\Request(true, $username, $password, $signature, $returnUrl, $cancelUrl, $logoUrl);
+//Create Transaction Object
+$transaction = new \easyPaypal\Transaction();
+//Set start and end date
+$startDate = new \DateTime();
+$endtDate = new \DateTime();
+$startDate->sub(new DateInterval('P30D'));
+$transaction->setStartDate($startDate);
+$transaction->setEndDate($endtDate);
+//Set request
+$transaction->setRequest($request);
+//Search transaction
+$transactions = $transaction->transactionSearch();
+
+//Get transaction details
+$details = $transaction->getTransactionDetails($transactions[0]->getTxnId());
+
+echo $details->getCustomer()->getFirstName()."<br/>";
+echo $details->getCustomer()->getLastName()."<br/>";
+echo $details->getCustomer()->getEmail()."<br/>";
+echo $details->getPaymentDate()."<br/>";
+echo $details->getTxnId()."<br/>";
+echo $details->getTxnType()."<br/>";
+echo $details->getPaymentStatus()."<br/>";
+echo $details->getGross()."<br/>";
+echo $details->getCurrencyCode()."<br/>";
+echo $details->getFee()."<br/>";
+```
 
 
 
